@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: employee-salary-management
+    description: management of employee salary
+    profile: generic
+  profiles:
+    active: dev
