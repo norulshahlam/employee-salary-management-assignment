@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.DecimalMin;
 import java.time.LocalDate;
@@ -20,6 +22,8 @@ import java.time.LocalDate;
 @Data
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer pk;
     private String id; // primary key of the table
     private String login; // login value is unique in table
     private String name; // non unique full name of the employee

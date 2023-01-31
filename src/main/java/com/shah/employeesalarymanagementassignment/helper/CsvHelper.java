@@ -2,7 +2,7 @@ package com.shah.employeesalarymanagementassignment.helper;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.shah.employeesalarymanagementassignment.dto.EmployeeDto;
+import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

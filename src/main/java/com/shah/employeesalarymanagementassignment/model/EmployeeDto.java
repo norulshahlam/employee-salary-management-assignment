@@ -1,9 +1,11 @@
-package com.shah.employeesalarymanagementassignment.dto;
+package com.shah.employeesalarymanagementassignment.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.validation.constraints.Pattern;
 
 @Slf4j
 @AllArgsConstructor
@@ -18,5 +20,6 @@ public class EmployeeDto {
     // valid date formats are
     // dd-MMM-yy: example -> 16-Nov-01
     // yyyy-MM-dd: example -> 2001-11-16
+    @Pattern(regexp = "[0-9]{4}-*[a-zA-Z]{3,}-*[0-9]{2}|([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
     private String startDate;
 }
