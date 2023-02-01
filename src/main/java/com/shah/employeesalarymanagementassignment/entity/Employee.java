@@ -22,8 +22,6 @@ import java.time.LocalDate;
 @Data
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer pk;
     private String id; // primary key of the table
     private String login; // login value is unique in table
     private String name; // non unique full name of the employee

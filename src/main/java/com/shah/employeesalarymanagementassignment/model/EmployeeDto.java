@@ -15,7 +15,7 @@ public class EmployeeDto {
     private String id; // primary key of the table
     private String login; // login value is unique in table
     private String name; // non unique full name of the employee
-    private double salary; // always >= 0
+    private String salary; // always >= 0
 
     // valid date formats are
     // dd-MMM-yy: example -> 16-Nov-01

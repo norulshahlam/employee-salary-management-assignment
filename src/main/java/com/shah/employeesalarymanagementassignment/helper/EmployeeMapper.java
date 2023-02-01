@@ -1,4 +1,4 @@
-package com.shah.employeesalarymanagementassignment.util;
+package com.shah.employeesalarymanagementassignment.helper;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
@@ -11,10 +11,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EmployeeMapper {
 
-    public static Employee mapEmployee(List<EmployeeDto> dto) {
+    public static Employee findDuplicates(List<EmployeeDto> dto) {
         Map<String, Long> collect = dto.stream().collect(Collectors.groupingBy(EmployeeDto::getLogin, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-        log.info("duplicates found: {}", collect);
+        if (!collect.isEmpty()) {
+            log.info("duplicates found: {}", collect);
+        }
         return null;
     }
+
+
 }
