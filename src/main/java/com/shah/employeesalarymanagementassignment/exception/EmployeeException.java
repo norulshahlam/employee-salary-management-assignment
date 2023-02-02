@@ -1,11 +1,11 @@
-package com.shah.supplementlist.exception;
+package com.shah.employeesalarymanagementassignment.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SupplementException extends RuntimeException {
+public class EmployeeException extends RuntimeException {
 
     private final String errorMessage;
 }
