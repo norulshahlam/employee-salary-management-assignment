@@ -22,7 +22,18 @@ public class GlobalExceptionHandler {
     public EmployeeResponse handleSupplementException(EmployeeException e) {
         return EmployeeResponse.builder()
                 .status(FAILURE)
+                .data(e.getData())
                 .errorMessage(e.getErrorMessage())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler({Exception.class})
+    @ResponseBody
+    public EmployeeResponse handleOtherException(Exception e) {
+        return EmployeeResponse.builder()
+                .status(FAILURE)
+                .errorMessage(e.getMessage())
                 .build();
     }
 

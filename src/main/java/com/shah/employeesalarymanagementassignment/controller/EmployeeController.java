@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
+import java.text.ParseException;
 
 @RestController
 @Slf4j
@@ -20,7 +20,7 @@ public class EmployeeController {
 
     @PostMapping("users/upload")
     public void uploadUsers(@RequestParam(name = "file", required = false)
-                                MultipartFile file) throws IOException {
+                                MultipartFile file) throws IOException, ParseException {
         log.info("EmployeeController::uploadUsers");
 
         employeeService.upload(file);

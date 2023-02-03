@@ -1,5 +1,6 @@
 package com.shah.employeesalarymanagementassignment.service;
 
+import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.helper.CsvHelper;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
-import static com.shah.employeesalarymanagementassignment.helper.EmployeeHelper.checkFileEmpty;
-import static com.shah.employeesalarymanagementassignment.helper.EmployeeHelper.findDuplicates;
+import static com.shah.employeesalarymanagementassignment.helper.EmployeeHelper.*;
 
 @Service
 @Slf4j
@@ -21,7 +22,7 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public void upload(MultipartFile file) throws IOException {
+    public void upload(MultipartFile file) throws IOException, ParseException {
         log.info("Uploading employee..");
 
         // check if file is empty
@@ -36,6 +37,8 @@ public class EmployeeService {
         // replace if id exists, else create new employee
         List<EmployeeDto> dto = CsvHelper.csvParser(file);
         findDuplicates(dto);
-        log.info("Uploading employee success: {}", dto);
+        ignoreRows(dto);
+        List<Employee> employees = mapToEmployee(dto);
+        log.info("Uploading employee success: {}", employees);
     }
 }

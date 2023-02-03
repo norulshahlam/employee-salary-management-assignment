@@ -23,7 +23,7 @@ public class EmployeeDto {
     @NotBlank
     private String name; // non unique full name of the employee
     @NotBlank
-    @DecimalMin(value = "0.0", inclusive = false)
+    @DecimalMin(value = "0.0", inclusive = false, message = "Salary must be greater than 0")
     private String salary; // always >= 0
 
     // valid date formats are
@@ -31,6 +31,6 @@ public class EmployeeDto {
     // yyyy-MM-dd: example -> 2001-11-16
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "[d-MMM-yy][yyyy-MM-d]")
-    @Pattern(regexp = "/[0-9]{2}-*[a-zA-Z]{3,}-*[0-9]{2}||([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))/")
+    @Pattern(regexp = "(([12]\\d{3}-(0[0-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]|\\d))|^\\d{2}-[a-zA-Z]{3}-[12]\\d{3}$)",  message = "date format invalid")
     private String startDate;
 }
