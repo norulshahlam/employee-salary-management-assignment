@@ -37,8 +37,8 @@ public class EmployeeService {
         // replace if id exists, else create new employee
         List<EmployeeDto> dto = CsvHelper.csvParser(file);
         findDuplicates(dto);
-        ignoreRows(dto);
-        List<Employee> employees = mapToEmployee(dto);
+        List<EmployeeDto> dto2 = ignoreRows(dto);
+        List<Employee> employees = mapToEmployee(dto2);
         log.info("Uploading employee success: {}", employees);
     }
 }

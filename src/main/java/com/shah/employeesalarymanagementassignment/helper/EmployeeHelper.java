@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 public class EmployeeHelper {
@@ -39,29 +38,29 @@ public class EmployeeHelper {
         Map<String, Long> collect = dto.stream().collect(Collectors.groupingBy(EmployeeDto::getId, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (!collect.isEmpty()) {
             log.error("duplicates id found: {}", collect);
-            throw new EmployeeException("duplicates id found: " + collect,null);
+            throw new EmployeeException("duplicates id found: " + collect, null);
         }
     }
 
-    public static Stream<EmployeeDto> ignoreRows(List<EmployeeDto> dto) {
+    public static List<EmployeeDto> ignoreRows(List<EmployeeDto> dto) {
         log.info("inside ignoreRows");
-        return dto.stream().filter(i -> !i.getId().contains("#"));
+         return dto.stream().filter(i -> !i.getId().contains("#")).collect(Collectors.toList());
     }
 
     public static LocalDate dateConverter(EmployeeDto i) throws ParseException {
-        log.info("inside dateFormatChecker");
-        String date = i.getStartDate();
-        DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-d");
-        DateTimeFormatter format2 = DateTimeFormatter.ofPattern("d-MMM-yy");
 
-        if (GenericValidator.isDate(date, "yyyy-MM-d", false))
+        String date = i.getStartDate();
+        DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MMM-yy");
+
+        if (GenericValidator.isDate(date, "yyyy-MM-dd", true))
             return LocalDate.parse(date, format1);
-        if (GenericValidator.isDate(date, "d-MMM-yy", false))
+        if (GenericValidator.isDate(date, "dd-MMM-yy", true))
             return LocalDate.parse(date, format2);
-        throw new EmployeeException("Invalid Date format for id "+i.getId(), i.getStartDate());
+        throw new EmployeeException("Invalid Date format for id " + i.getId(), i.getStartDate());
     }
 
-    public static List<Employee> mapToEmployee(List<EmployeeDto> employeeDto) throws ParseException {
+    public static List<Employee> mapToEmployee(List<EmployeeDto> employeeDto) {
         log.info("inside mapToEmployee");
         return employeeDto.parallelStream().map(i -> {
             Employee employee = new Employee();
