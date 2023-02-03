@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     public EmployeeResponse handleOtherException(Exception e) {
         return EmployeeResponse.builder()
                 .status(FAILURE)
-                .errorMessage(e.getMessage())
+                .errorMessage(e.getLocalizedMessage())
                 .build();
     }
 

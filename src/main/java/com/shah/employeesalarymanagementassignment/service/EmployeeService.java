@@ -28,17 +28,18 @@ public class EmployeeService {
         // check if file is empty
         checkFileEmpty(file);
 
-
         // check if the file is empty, correct filename & format - ok
-        // check for duplicate id - throw error if exists - ok
-        // check if date & salary is correct format
-        // skip if contains '#'
-        // check is value meet business requirements
-        // replace if id exists, else create new employee
         List<EmployeeDto> dto = CsvHelper.csvParser(file);
+        // check if date & salary is correct format
+        employeeValidator(dto);
+        // check for duplicate id - throw error if exists - ok
         findDuplicates(dto);
+        // skip if contains '#'
         List<EmployeeDto> dto2 = ignoreRows(dto);
+        // map dto to employee list
         List<Employee> employees = mapToEmployee(dto2);
-        log.info("Uploading employee success: {}", employees);
+        // replace if id exists, else create new employee
+        Iterable<Employee> savedEmployees = employeeRepository.saveAll(employees);
+        log.info("Uploading employee success: {}", savedEmployees);
     }
 }

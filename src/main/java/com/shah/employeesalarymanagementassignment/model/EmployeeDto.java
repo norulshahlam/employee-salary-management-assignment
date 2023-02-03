@@ -18,7 +18,6 @@ public class EmployeeDto {
     @NotBlank
     private String id; // primary key of the table
     @NotBlank
-
     private String login; // login value is unique in table
     @NotBlank
     private String name; // non unique full name of the employee

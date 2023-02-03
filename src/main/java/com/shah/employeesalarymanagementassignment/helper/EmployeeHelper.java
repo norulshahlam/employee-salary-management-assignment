@@ -5,15 +5,17 @@ import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -66,6 +68,7 @@ public class EmployeeHelper {
             Employee employee = new Employee();
             employee.setId(i.getId());
             employee.setName(i.getName());
+            employee.setLogin(i.getLogin());
             employee.setSalary(Double.parseDouble(i.getSalary()));
             try {
                 employee.setStartDate(dateConverter(i));
@@ -74,5 +77,28 @@ public class EmployeeHelper {
             }
             return employee;
         }).collect(Collectors.toList());
+    }
+
+    public static void employeeValidator(List<EmployeeDto> beans) {
+        Validator factory = Validation.buildDefaultValidatorFactory().getValidator();
+        List<String> data = new ArrayList<>();
+
+        for (EmployeeDto dto : beans) {
+            List<String> errorMessage = new ArrayList<>();
+            Set<ConstraintViolation<EmployeeDto>> violations = factory.validate(dto);
+            for (ConstraintViolation<EmployeeDto> violation : violations) {
+                if (StringUtils.isNotEmpty(violation.getMessage())) {
+                    log.info(dto.getId() + " - " + violation.getMessage());
+                    errorMessage.add(violation.getMessage());
+                }
+            }
+            if (!errorMessage.isEmpty()) {
+                data.add("id: " + dto.getId() + " - " + String.join(", ", errorMessage));
+            }
+        }
+        if (!data.isEmpty()) {
+            log.error(data.toString());
+            throw new EmployeeException("item validation failed", data);
+        }
     }
 }
