@@ -92,14 +92,17 @@ public class EmployeeHelper {
         log.info("inside findDuplicateLoginInDb");
 
         IterableUtils.toList(employeeRepository.findAll())
-                        .parallelStream()
-                                .filter(i -> i.getLogin().equalsIgnoreCase(dto.get(0).getLogin()));
+                .parallelStream()
+                .filter(i -> i.getLogin().equalsIgnoreCase(dto.get(0).getLogin()));
+
+
 
         dto.parallelStream().forEach(i -> {
             Employee byLogin = employeeRepository.findDistinctByLogin(i.getLogin());
-            log.info(String.valueOf(byLogin));
             if (ObjectUtils.anyNotNull(byLogin)) {
-
+                if (!i.getId().equalsIgnoreCase(byLogin.getId())) {
+                    throw new EmployeeException("login exists in db: " + i.getLogin(), null);
+                }
             }
         });
     }
