@@ -24,20 +24,20 @@ public class EmployeeService {
     public List<Employee> upload(MultipartFile file) throws IOException {
         log.info("Uploading employee..");
 
-        // check if file is empty
+        // check if file is empty, check correct filename & format - ok
         checkFileEmpty(file);
-        // check if the file is empty, correct filename & format - ok
+        // parse csv - ok
         List<EmployeeDto> dto = CsvHelper.csvParser(file);
-        // check if date & salary is correct format
+        // check if date & salary is correct format - ok
         employeeValidator(dto);
         // check for duplicate id - throw error if exists - ok
         findDuplicateId(dto);
         // check for duplicate login - throw error if exists
         findDuplicateLogin(dto);
         // skip if contains '#'
-        List<EmployeeDto> dto2 = ignoreRows(dto);
+        ignoreRows(dto);
         // map dto to employee list - ok
-        List<Employee> employees = mapToEmployee(dto2);
+        List<Employee> employees = mapToEmployee(dto);
         // replace if id exists, else create new employee - ok
         Iterable<Employee> savedEmployees = employeeRepository.saveAll(employees);
         log.info("Uploading employee success: {}", savedEmployees);

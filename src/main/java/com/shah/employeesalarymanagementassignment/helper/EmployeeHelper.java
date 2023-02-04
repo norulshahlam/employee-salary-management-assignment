@@ -43,6 +43,7 @@ public class EmployeeHelper {
             throw new EmployeeException("duplicates id found: " + collect, null);
         }
     }
+
     public static void findDuplicateLogin(List<EmployeeDto> dto) {
         log.info("inside findDuplicates");
         Map<String, Long> collect = dto.stream().collect(Collectors.groupingBy(EmployeeDto::getLogin, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -52,9 +53,9 @@ public class EmployeeHelper {
         }
     }
 
-    public static List<EmployeeDto> ignoreRows(List<EmployeeDto> dto) {
+    public static void ignoreRows(List<EmployeeDto> dto) {
         log.info("inside ignoreRows");
-         return dto.stream().filter(i -> !i.getId().contains("#")).collect(Collectors.toList());
+        dto.removeIf(i -> i.getId().startsWith("#"));
     }
 
     public static LocalDate dateConverter(EmployeeDto i) throws ParseException {
