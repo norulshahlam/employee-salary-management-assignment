@@ -2,6 +2,7 @@ package com.shah.employeesalarymanagementassignment.service;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.helper.CsvHelper;
+import com.shah.employeesalarymanagementassignment.helper.EmployeeHelper;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import static com.shah.employeesalarymanagementassignment.helper.EmployeeHelper.
 @AllArgsConstructor
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
+    private EmployeeHelper helper;
 
     public List<Employee> upload(MultipartFile file) throws IOException {
         log.info("Uploading employee..");
@@ -32,18 +34,19 @@ public class EmployeeService {
         employeeValidator(dto);
         // check for duplicate id - throw error if exists - ok
         findDuplicateId(dto);
-        // check for duplicate login - throw error if exists
+        // check for duplicate login in dto - throw error if exists
         findDuplicateLogin(dto);
         // skip if contains '#'
         ignoreRows(dto);
+        // check for duplicate login in db
+        helper.findDuplicateLoginInDb(dto);
         // map dto to employee list - ok
         List<Employee> employees = mapToEmployee(dto);
-        // replace if id exists, else create new employee - ok
+        // replace if id exists, else create new employee
+        // once all is checked, then save to database
         Iterable<Employee> savedEmployees = employeeRepository.saveAll(employees);
         log.info("Uploading employee success: {}", savedEmployees);
 
         return IterableUtils.toList(savedEmployees);
     }
-
-
 }

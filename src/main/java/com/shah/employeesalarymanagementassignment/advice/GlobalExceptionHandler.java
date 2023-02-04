@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.shah.employeesalarymanagementassignment.model.ResponseStatus.FAILURE;
 
 @RestControllerAdvice
@@ -26,7 +31,27 @@ public class GlobalExceptionHandler {
                 .errorMessage(e.getErrorMessage())
                 .build();
     }
+    /**
+     * When an action violates a constraint on repository structure
+     *
+     * @param req
+     * @param e
+     * @return
+     */
 
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler({ConstraintViolationException.class})
+    @ResponseBody
+    public EmployeeResponse handleConstraintViolationException(HttpServletRequest req, ConstraintViolationException e) {
+
+        List<String> cause = e.getConstraintViolations().stream().map(violation -> violation.getPropertyPath().toString() + ": " + violation.getMessage()).collect(Collectors.toList());
+        log.error("requestUrl : {}, occurred an error : {}, exception detail : {}", req.getRequestURI(), cause, e);
+        String collect = String.join(", ", cause);
+        return EmployeeResponse.builder()
+                .status(FAILURE)
+                .data(collect)
+                .build();
+    }
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler({Exception.class})
     @ResponseBody
