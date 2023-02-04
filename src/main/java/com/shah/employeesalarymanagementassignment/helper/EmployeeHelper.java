@@ -35,12 +35,20 @@ public class EmployeeHelper {
         }
     }
 
-    public static void findDuplicates(List<EmployeeDto> dto) {
+    public static void findDuplicateId(List<EmployeeDto> dto) {
         log.info("inside findDuplicates");
         Map<String, Long> collect = dto.stream().collect(Collectors.groupingBy(EmployeeDto::getId, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (!collect.isEmpty()) {
             log.error("duplicates id found: {}", collect);
             throw new EmployeeException("duplicates id found: " + collect, null);
+        }
+    }
+    public static void findDuplicateLogin(List<EmployeeDto> dto) {
+        log.info("inside findDuplicates");
+        Map<String, Long> collect = dto.stream().collect(Collectors.groupingBy(EmployeeDto::getLogin, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (!collect.isEmpty()) {
+            log.error("duplicates login found: {}", collect);
+            throw new EmployeeException("duplicates login found: " + collect, null);
         }
     }
 

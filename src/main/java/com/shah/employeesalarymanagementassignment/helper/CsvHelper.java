@@ -21,7 +21,7 @@ public class CsvHelper {
         Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
 
         // create csv bean reader
-        List<EmployeeDto> beans = new CsvToBeanBuilder<EmployeeDto>(reader)
+        List<EmployeeDto> dto = new CsvToBeanBuilder<EmployeeDto>(reader)
                 .withType(EmployeeDto.class)
                 .withIgnoreQuotations(true)
                 .withThrowExceptions(true)
@@ -29,8 +29,6 @@ public class CsvHelper {
                 .parse();
         reader.close();
 
-
-
-        return beans;
+        return dto;
     }
 }

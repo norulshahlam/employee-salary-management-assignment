@@ -30,6 +30,6 @@ public class EmployeeDto {
     // yyyy-MM-dd: example -> 2001-11-16
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "[d-MMM-yy][yyyy-MM-d]")
-    @Pattern(regexp = "(([12]\\d{3}-(0[0-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]|\\d))|(^\\d{2}-[a-zA-Z]{3}-[12]\\d$))",  message = "date format invalid")
+    @Pattern(regexp = "(([12]\\d{3}-(0[0-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]|\\d))|(^\\d{2}-[a-zA-Z]{3}-[12]\\d$))",  message = "invalid date format. Use [dd-MMM-yy] or [yyyy-MM-dd] ")
     private String startDate;
 }
