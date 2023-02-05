@@ -6,7 +6,6 @@ import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.GenericValidator;
@@ -42,11 +41,13 @@ public class EmployeeHelper {
         }
     }
 
-    public static void employeeValidator(List<EmployeeDto> beans) {
+    public static void employeeValidator(List<EmployeeDto> dtoList) {
+        log.info("inside employeeValidator");
+
         Validator factory = Validation.buildDefaultValidatorFactory().getValidator();
         List<String> data = new ArrayList<>();
 
-        for (EmployeeDto dto : beans) {
+        dtoList.parallelStream().forEach(dto -> {
             List<String> errorMessage = new ArrayList<>();
             Set<ConstraintViolation<EmployeeDto>> violations = factory.validate(dto);
             for (ConstraintViolation<EmployeeDto> violation : violations) {
@@ -58,15 +59,15 @@ public class EmployeeHelper {
             if (!errorMessage.isEmpty()) {
                 data.add("id: " + dto.getId() + " - " + String.join(", ", errorMessage));
             }
-        }
+        });
         if (!data.isEmpty()) {
             log.error(data.toString());
-            throw new EmployeeException("item validation failed", data);
+            throw new EmployeeException("validation failed", data);
         }
     }
 
     public static void findDuplicateId(List<EmployeeDto> dto) {
-        log.info("inside findDuplicates");
+        log.info("inside findDuplicateId");
         Map<String, Long> collect = dto.parallelStream().collect(Collectors.groupingBy(EmployeeDto::getId, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (!collect.isEmpty()) {
             log.error("duplicates id found: {}", collect);
@@ -75,7 +76,7 @@ public class EmployeeHelper {
     }
 
     public static void findDuplicateLogin(List<EmployeeDto> dto) {
-        log.info("inside findDuplicates");
+        log.info("inside findDuplicateLogin");
         Map<String, Long> collect = dto.parallelStream().collect(Collectors.groupingBy(EmployeeDto::getLogin, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (!collect.isEmpty()) {
             log.error("duplicates login found: {}", collect);
@@ -90,12 +91,6 @@ public class EmployeeHelper {
 
     public void findDuplicateLoginInDb(List<EmployeeDto> dto) {
         log.info("inside findDuplicateLoginInDb");
-
-        IterableUtils.toList(employeeRepository.findAll())
-                .parallelStream()
-                .filter(i -> i.getLogin().equalsIgnoreCase(dto.get(0).getLogin()));
-
-
 
         dto.parallelStream().forEach(i -> {
             Employee byLogin = employeeRepository.findDistinctByLogin(i.getLogin());
@@ -130,9 +125,9 @@ public class EmployeeHelper {
         DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MMM-yy");
 
-        if (GenericValidator.isDate(date, "yyyy-MM-dd", true))
+        if (GenericValidator.isDate(date, String.valueOf(format1), true))
             return LocalDate.parse(date, format1);
-        if (GenericValidator.isDate(date, "dd-MMM-yy", true))
+        if (GenericValidator.isDate(date, String.valueOf(format2), true))
             return LocalDate.parse(date, format2);
         throw new EmployeeException("Invalid Date format for id " + i.getId(), i.getStartDate());
     }
