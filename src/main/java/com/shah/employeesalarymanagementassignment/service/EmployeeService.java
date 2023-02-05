@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
 import static com.shah.employeesalarymanagementassignment.helper.UploadHelper.*;
@@ -50,7 +51,13 @@ public class EmployeeService {
     }
 
     public List<Employee> fetchListOfEmployees(
-            double minSalary, double maxSalary, String sortedBy, String query, int offset, int limit) {
+            double minSalary, double maxSalary, String sortedBy, String query, long offset, long limit) {
+        List<Employee> salaryBetween = employeeRepository.findBySalaryBetween(minSalary, maxSalary);
+
+        List<Employee> collect = salaryBetween.stream()
+                .limit(offset).collect(Collectors.toList());
+
+        salaryBetween.forEach(i -> log.info("Result: {}", i));
 
         return null;
     }

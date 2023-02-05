@@ -36,8 +36,8 @@ public class EmployeeController {
 
     @GetMapping("users")
     public EmployeeResponse fetchListOfEmployees(
-            @RequestParam(defaultValue = "0") int offset,
-            @RequestParam(defaultValue = "0") int limit,
+            @RequestParam(defaultValue = "0") long offset,
+            @RequestParam(defaultValue = "0") long limit,
             @RequestParam(defaultValue = "0") double minSalary,
             @RequestParam(defaultValue = "4000") double maxSalary,
             @RequestParam(defaultValue = "id") String sortedBy,
