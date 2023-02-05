@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class EmployeeHelper {
+public class UploadHelper {
     private EmployeeRepository employeeRepository;
 
     public static void checkFileEmpty(MultipartFile file) {
@@ -122,13 +122,18 @@ public class EmployeeHelper {
     public static LocalDate dateConverter(EmployeeDto i) throws ParseException {
 
         String date = i.getStartDate();
-        DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MMM-yy");
+        String pattern1 = "yyyy-MM-dd";
+        String pattern2 = "dd-MMM-yy";
 
-        if (GenericValidator.isDate(date, String.valueOf(format1), true))
+        DateTimeFormatter format1 = DateTimeFormatter.ofPattern(pattern1);
+        DateTimeFormatter format2 = DateTimeFormatter.ofPattern(pattern2);
+
+        if (GenericValidator.isDate(date, pattern1, true)) {
             return LocalDate.parse(date, format1);
-        if (GenericValidator.isDate(date, String.valueOf(format2), true))
+        }
+        if (GenericValidator.isDate(date, pattern2, true)) {
             return LocalDate.parse(date, format2);
+        }
         throw new EmployeeException("Invalid Date format for id " + i.getId(), i.getStartDate());
     }
 }

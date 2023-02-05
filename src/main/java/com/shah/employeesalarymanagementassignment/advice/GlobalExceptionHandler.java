@@ -21,7 +21,7 @@ import static com.shah.employeesalarymanagementassignment.model.ResponseStatus.F
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({EmployeeException.class})
     @ResponseBody
     public EmployeeResponse handleSupplementException(EmployeeException e) {
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
      * @return
      */
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseBody
     public EmployeeResponse handleConstraintViolationException(HttpServletRequest req, ConstraintViolationException e) {
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
                 .data(collect)
                 .build();
     }
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
     @ResponseBody
     public EmployeeResponse handleOtherException(Exception e) {

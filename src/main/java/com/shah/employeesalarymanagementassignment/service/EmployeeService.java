@@ -1,7 +1,7 @@
 package com.shah.employeesalarymanagementassignment.service;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
-import com.shah.employeesalarymanagementassignment.helper.EmployeeHelper;
+import com.shah.employeesalarymanagementassignment.helper.UploadHelper;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -14,16 +14,16 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
-import static com.shah.employeesalarymanagementassignment.helper.EmployeeHelper.*;
+import static com.shah.employeesalarymanagementassignment.helper.UploadHelper.*;
 
 @Service
 @Slf4j
 @AllArgsConstructor
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
-    private EmployeeHelper helper;
+    private UploadHelper uploadHelper;
 
-    public List<Employee> upload(MultipartFile file) throws IOException {
+    public List<Employee> uploadUsers(MultipartFile file) throws IOException {
         log.info("Uploading employee..");
 
         // check if file is empty, check correct filename & format - ok
@@ -39,14 +39,19 @@ public class EmployeeService {
         // skip if contains '#'
         ignoreRows(dto);
         // check for duplicate login in db
-        helper.findDuplicateLoginInDb(dto);
+        uploadHelper.findDuplicateLoginInDb(dto);
         // map dto to employee list - ok
         List<Employee> employees = mapToEmployee(dto);
-        // replace if id exists, else create new employee
         // once all is checked, then save to database
         Iterable<Employee> savedEmployees = employeeRepository.saveAll(employees);
         log.info("Uploading employee success: {}", savedEmployees);
 
         return IterableUtils.toList(savedEmployees);
+    }
+
+    public List<Employee> fetchListOfEmployees(
+            double minSalary, double maxSalary, String sortedBy, String query, int offset, int limit) {
+
+        return null;
     }
 }
