@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,22 +55,32 @@ public class EmployeeService {
         return IterableUtils.toList(savedEmployees);
     }
 
+    /**
+     *
+     * @param minSalary default is 0
+     * @param maxSalary default is 4000.00
+     * @param sortedBy default is "id"
+     * @param sortDirection default is ASC
+     * @param offset default is 0
+     * @param limit default is no limit
+     * @return list of employees
+     */
     public List<Employee> fetchListOfEmployees(
-            double minSalary, double maxSalary, String sortedBy, String query, long offset, long limit) {
+            double minSalary, double maxSalary, String sortedBy, String sortDirection, long offset, long limit) {
 
         if (limit == 0) {
             limit = Long.MAX_VALUE;
         }
 
         List<Employee> all = employeeRepository.findAll(where(
-                        salaryGreaterThan(minSalary).and(
+                                salaryGreaterThan(minSalary).and(
                                         salaryLessThanOrEqualTo(maxSalary))),
-                Sort.by(sortedBy))
+                        Sort.by(Direction.valueOf(sortDirection.toUpperCase()), sortedBy))
                 .stream()
                 .limit(limit)
                 .skip(offset)
                 .collect(Collectors.toList());
-        ;
+
         all.forEach(i -> log.info("sorted: {}", i));
         return all;
     }

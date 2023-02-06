@@ -41,10 +41,10 @@ public class EmployeeController {
             @RequestParam(defaultValue = "0") double minSalary,
             @RequestParam(defaultValue = "4000") double maxSalary,
             @RequestParam(defaultValue = "id") String sortedBy,
-            @RequestParam(defaultValue = "") String query) {
+            @RequestParam(defaultValue = "ASC") String sortDirection) {
         log.info("EmployeeController::fetchListOfEmployees");
         List<Employee> employeeList = employeeService.fetchListOfEmployees(
-                minSalary, maxSalary, sortedBy, query, offset, limit);
+                minSalary, maxSalary, sortedBy, sortDirection, offset, limit);
         return SuccessResponse(employeeList);
     }
 }

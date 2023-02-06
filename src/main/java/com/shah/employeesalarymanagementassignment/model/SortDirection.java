@@ -1,2 +1,5 @@
-package com.shah.employeesalarymanagementassignment.model;public enum SortDirection {
+package com.shah.employeesalarymanagementassignment.model;
+
+public enum SortDirection {
+    ASC, DESC
 }
