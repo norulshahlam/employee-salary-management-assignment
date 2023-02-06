@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,13 +57,12 @@ public class EmployeeService {
     }
 
     /**
-     *
-     * @param minSalary default is 0
-     * @param maxSalary default is 4000.00
-     * @param sortedBy default is "id"
+     * @param minSalary     default is 0
+     * @param maxSalary     default is 4000.00
+     * @param sortedBy      default is "id"
      * @param sortDirection default is ASC
-     * @param offset default is 0
-     * @param limit default is no limit
+     * @param offset        default is 0
+     * @param limit         default is no limit
      * @return list of employees
      */
     public List<Employee> fetchListOfEmployees(
@@ -72,10 +72,15 @@ public class EmployeeService {
             limit = Long.MAX_VALUE;
         }
 
-        List<Employee> all = employeeRepository.findAll(where(
-                                salaryGreaterThan(minSalary).and(
-                                        salaryLessThanOrEqualTo(maxSalary))),
-                        Sort.by(Direction.valueOf(sortDirection.toUpperCase()), sortedBy))
+        Specification<Employee> specification = where(
+                salaryGreaterThan(minSalary)
+                        .and(salaryLessThanOrEqualTo(maxSalary)));
+
+        Sort sort = Sort
+                .by(Direction.valueOf(sortDirection.toUpperCase()), sortedBy);
+
+        List<Employee> all = employeeRepository
+                .findAll(specification, sort)
                 .stream()
                 .limit(limit)
                 .skip(offset)

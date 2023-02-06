@@ -14,12 +14,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, String>, Jpa
     Employee findDistinctByLogin(String login);
 
     static Specification<Employee> salaryGreaterThan(double min) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.gt(
+        return (root, query, builder) -> builder.gt(
                 root.get("salary"), min);
     }
 
     static Specification<Employee> salaryLessThanOrEqualTo(double max) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(
+        return ((root, query, builder) -> builder.lessThanOrEqualTo(
                 root.get("salary"), max));
     }
 }
