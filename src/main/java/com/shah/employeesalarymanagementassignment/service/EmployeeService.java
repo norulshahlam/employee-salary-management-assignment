@@ -7,6 +7,7 @@ import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IterableUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
 import static com.shah.employeesalarymanagementassignment.helper.UploadHelper.*;
+import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryGreaterThan;
+import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryLessThanOrEqualTo;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 @Slf4j
@@ -52,13 +56,21 @@ public class EmployeeService {
 
     public List<Employee> fetchListOfEmployees(
             double minSalary, double maxSalary, String sortedBy, String query, long offset, long limit) {
-        List<Employee> salaryBetween = employeeRepository.findBySalaryBetween(minSalary, maxSalary);
 
-        List<Employee> collect = salaryBetween.stream()
-                .limit(offset).collect(Collectors.toList());
+        if (limit == 0) {
+            limit = Long.MAX_VALUE;
+        }
 
-        salaryBetween.forEach(i -> log.info("Result: {}", i));
-
-        return null;
+        List<Employee> all = employeeRepository.findAll(where(
+                        salaryGreaterThan(minSalary).and(
+                                        salaryLessThanOrEqualTo(maxSalary))),
+                Sort.by(sortedBy))
+                .stream()
+                .limit(limit)
+                .skip(offset)
+                .collect(Collectors.toList());
+        ;
+        all.forEach(i -> log.info("sorted: {}", i));
+        return all;
     }
 }

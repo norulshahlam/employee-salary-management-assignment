@@ -19,15 +19,18 @@ import java.time.LocalDate;
 @Data
 public class Employee {
     @Id
-    private String id; // primary key of the table
+    private String id;
     @Column(unique = true)
-    private String login; // login value is unique in table
-    private String name; // non unique full name of the employee
-    private double salary; // always >= 0
+    private String login;
+    private String name;
+    /**
+     * value must be more than 0
+     */
+    private double salary;
 
-    // valid date formats are
-    // dd-MMM-yy: example -> 16-Nov-01
-    // yyyy-MM-dd: eample -> 2001-11-16
+    /**
+     * valid date formats are dd-MMM-yy: example -> 16-Nov-01 | yyyy-MM-dd: example -> 2001-11-16
+     */
     private LocalDate startDate;
 
 }
