@@ -4,6 +4,7 @@ import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -26,18 +27,16 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
+@NoArgsConstructor
 class UploadHelperTest {
+
     @Mock
-    private EmployeeRepository employeeRepository;
+    private static EmployeeRepository employeeRepository;
     private List<EmployeeDto> employeeDto = new ArrayList<>();
-    private List<Employee> employee = new ArrayList<>();
     private UploadHelper uploadHelper;
     private MultipartFile multipartFile;
     File file;
     FileInputStream input;
-
-    UploadHelperTest() {
-    }
 
     @BeforeEach
     void setUp() throws IOException {
@@ -103,9 +102,8 @@ class UploadHelperTest {
     @Test
     void findDuplicateLoginInDb() {
         employeeDto.forEach(i -> log.info(i.toString()));
-        Employee dharry = Employee.builder().login("dharry").build();
         when(employeeRepository.findDistinctByLogin(any()))
-                .thenReturn(dharry);
+                .thenReturn(Employee.builder().id("d").login("dharry").build());
         Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.findDuplicateLoginInDb(employeeDto));
     }
 }

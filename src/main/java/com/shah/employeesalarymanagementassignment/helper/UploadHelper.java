@@ -17,11 +17,15 @@ import javax.validation.Validator;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author NORUL
+ */
 @Slf4j
 @Service
 @AllArgsConstructor
 public class UploadHelper {
-    private EmployeeRepository employeeRepository;
+    public static final String TEXT_CSV = "text/csv";
+    private static EmployeeRepository employeeRepository;
 
     public static void checkFileEmpty(MultipartFile file) {
         log.info("inside checkFileEmpty");
@@ -31,7 +35,7 @@ public class UploadHelper {
         } else if (file.isEmpty()) {
             log.error("Empty file");
             throw new EmployeeException("Empty file", null);
-        } else if (!Objects.requireNonNull(file.getContentType()).equals("text/csv")) {
+        } else if (!Objects.requireNonNull(file.getContentType()).equals(TEXT_CSV)) {
             log.error("Invalid csv type");
             throw new EmployeeException("Invalid csv type", null);
         }
@@ -85,13 +89,14 @@ public class UploadHelper {
         dto.removeIf(i -> i.getId().startsWith("#"));
     }
 
-    public void findDuplicateLoginInDb(List<EmployeeDto> dto) {
+    public static void findDuplicateLoginInDb(List<EmployeeDto> dto) {
+
         log.info("inside findDuplicateLoginInDb");
 
         dto.parallelStream().forEach(i -> {
             Employee byLogin = employeeRepository.findDistinctByLogin(i.getLogin());
-            if (ObjectUtils.anyNotNull(byLogin)) {
-                if (!i.getId().equalsIgnoreCase(byLogin.getId())) {
+            if (ObjectUtils.isNotEmpty(byLogin)) {
+                if (!i.getId().equalsIgnoreCase(ObjectUtils.requireNonEmpty(byLogin.getId()))) {
                     throw new EmployeeException("login exists in db: " + i.getLogin(), null);
                 }
             }
