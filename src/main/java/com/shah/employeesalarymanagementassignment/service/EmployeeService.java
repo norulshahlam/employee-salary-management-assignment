@@ -18,11 +18,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
+import static com.shah.employeesalarymanagementassignment.helper.MyMapper.mapToEmployee;
 import static com.shah.employeesalarymanagementassignment.helper.UploadHelper.*;
 import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryGreaterThan;
 import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryLessThanOrEqualTo;
 import static org.springframework.data.jpa.domain.Specification.where;
 
+/**
+ * @author NORUL
+ */
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -60,7 +64,7 @@ public class EmployeeService {
      * @param minSalary     default is 0
      * @param maxSalary     default is 4000.00
      * @param sortedBy      default is "id"
-     * @param sortDirection default is ASC
+     * @param sortDirection default is "ASC"
      * @param offset        default is 0
      * @param limit         default is no limit
      * @return list of employees
