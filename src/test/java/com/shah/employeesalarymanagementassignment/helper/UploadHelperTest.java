@@ -32,11 +32,11 @@ class UploadHelperTest {
 
     @Mock
     private static EmployeeRepository employeeRepository;
-    private List<EmployeeDto> employeeDto = new ArrayList<>();
+    private static List<EmployeeDto> employeeDto = new ArrayList<>();
     private UploadHelper uploadHelper;
     private MultipartFile multipartFile;
-    File file;
-    FileInputStream input;
+    private File file;
+    private FileInputStream input;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -45,15 +45,22 @@ class UploadHelperTest {
         setUpEmployees();
     }
 
-    void setUpEmployees() {
+    public static List<EmployeeDto> setUpEmployees() {
         employeeDto.add(EmployeeDto.builder()
                 .id("001")
                 .login("dharry")
+                .name("Harry Potter")
+                .salary("1234")
+                .startDate("2001-11-16")
                 .build());
         employeeDto.add(EmployeeDto.builder()
                 .id("001")
                 .login("dharry")
+                .name("de Potter")
+                .salary("5567")
+                .startDate("11-Nov-11")
                 .build());
+        return employeeDto;
     }
 
     @AfterEach

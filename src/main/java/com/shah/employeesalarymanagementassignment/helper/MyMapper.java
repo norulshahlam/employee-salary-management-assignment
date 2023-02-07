@@ -37,7 +37,7 @@ public class MyMapper {
         }).collect(Collectors.toList());
     }
 
-    public static LocalDate dateConverter(EmployeeDto i) throws ParseException {
+    private static LocalDate dateConverter(EmployeeDto i) throws ParseException {
 
         String date = i.getStartDate();
         String pattern1 = "yyyy-MM-dd";
