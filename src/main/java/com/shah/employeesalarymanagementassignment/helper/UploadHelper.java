@@ -25,7 +25,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UploadHelper {
     public static final String TEXT_CSV = "text/csv";
-    private static EmployeeRepository employeeRepository;
+
+    private EmployeeRepository employeeRepository;
 
     public static void checkFileEmpty(MultipartFile file) {
         log.info("inside checkFileEmpty");
@@ -89,7 +90,7 @@ public class UploadHelper {
         dto.removeIf(i -> i.getId().startsWith("#"));
     }
 
-    public static void findDuplicateLoginInDb(List<EmployeeDto> dto) {
+    public void findDuplicateLoginInDb(List<EmployeeDto> dto) {
 
         log.info("inside findDuplicateLoginInDb");
 
@@ -102,6 +103,4 @@ public class UploadHelper {
             }
         });
     }
-
-
 }

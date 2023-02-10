@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Slf4j
 class MyMapperTest {
 
-    private static List<EmployeeDto> employeeDto = new ArrayList<>();
+    private List<EmployeeDto> employeeDto = new ArrayList<>();
 
     @BeforeEach
     void setUp() {

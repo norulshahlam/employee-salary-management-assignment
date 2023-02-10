@@ -50,7 +50,7 @@ public class EmployeeService {
         // skip if contains '#'
         ignoreRows(dto);
         // check for duplicate login in db
-        findDuplicateLoginInDb(dto);
+        uploadHelper.findDuplicateLoginInDb(dto);
         // map dto to employee list - ok
         List<Employee> employees = mapToEmployee(dto);
         // once all is checked, then save to database

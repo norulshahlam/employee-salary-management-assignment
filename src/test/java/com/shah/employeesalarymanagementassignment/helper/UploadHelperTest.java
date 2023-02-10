@@ -65,6 +65,7 @@ class UploadHelperTest {
 
     @AfterEach
     void tearDown() {
+        employeeDto.clear();
     }
 
     @Test
@@ -88,6 +89,7 @@ class UploadHelperTest {
 
     @Test
     void employeeValidator() {
+        employeeDto.forEach(i->i.setSalary(""));
         Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.employeeValidator(employeeDto));
     }
 
@@ -108,7 +110,6 @@ class UploadHelperTest {
 
     @Test
     void findDuplicateLoginInDb() {
-        employeeDto.forEach(i -> log.info(i.toString()));
         when(employeeRepository.findDistinctByLogin(any()))
                 .thenReturn(Employee.builder().id("d").login("dharry").build());
         Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.findDuplicateLoginInDb(employeeDto));
