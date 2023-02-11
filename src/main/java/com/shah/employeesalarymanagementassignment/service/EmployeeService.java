@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
@@ -107,19 +106,13 @@ public class EmployeeService {
     }
 
     public EmployeeDto getEmployeeById(String id) {
-        Optional<Employee> byId = employeeRepository.findById(id);
-        if (byId.isPresent()) {
-            return mapToEmployeeDto(List.of(byId.get())).get(0);
-        }
-        throw new EmployeeException("Employee not found", null);
+        Employee byId = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Employee not found", null));
+        return mapToEmployeeDto(List.of(byId)).get(0);
     }
 
     public String updateEmployeeById(String id, EmployeeDto dto) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isEmpty()) {
-            throw new EmployeeException("Employee not found", null);
-        }
-        dto.setId(id);
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Employee not found", null));
+        dto.setId(employee.getId());
         employeeValidator(List.of(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
         employeeRepository.save(employees.get(0));
@@ -127,11 +120,8 @@ public class EmployeeService {
     }
 
     public String deleteEmployeeById(String id) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isEmpty()) {
-            throw new EmployeeException("Employee not found", null);
-        }
-        employeeRepository.deleteById(id);
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Employee not found", null));
+        employeeRepository.deleteById(employee.getId());
         return "Successfully updated";
     }
 }
