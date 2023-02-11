@@ -7,7 +7,6 @@ import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -70,37 +70,37 @@ class UploadHelperTest {
 
     @Test
     void checkFileEmpty_NoFileUploaded() {
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.checkFileEmpty(null));
+        assertThrows(EmployeeException.class, () -> UploadHelper.checkFileEmpty(null));
     }
 
     @Test
     void checkFileEmpty_EmptyFile() {
         multipartFile = new MockMultipartFile("file",
                 file.getName(), "text/csv", (byte[]) null);
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.checkFileEmpty(multipartFile));
+        assertThrows(EmployeeException.class, () -> UploadHelper.checkFileEmpty(multipartFile));
     }
 
     @Test
     void checkFileEmpty_InvalidCsvType() throws IOException {
         multipartFile = new MockMultipartFile("file",
                 file.getName(), "text/test", input);
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.checkFileEmpty(multipartFile));
+        assertThrows(EmployeeException.class, () -> UploadHelper.checkFileEmpty(multipartFile));
     }
 
     @Test
     void employeeValidator() {
         employeeDto.forEach(i->i.setSalary(""));
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.employeeValidator(employeeDto));
+        assertThrows(EmployeeException.class, () -> UploadHelper.employeeValidator(employeeDto));
     }
 
     @Test
     void findDuplicateId() {
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.findDuplicateId(employeeDto));
+        assertThrows(EmployeeException.class, () -> UploadHelper.findDuplicateId(employeeDto));
     }
 
     @Test
     void findDuplicateLogin() {
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.findDuplicateLogin(employeeDto));
+        assertThrows(EmployeeException.class, () -> UploadHelper.findDuplicateLogin(employeeDto));
     }
 
     @Test
@@ -112,6 +112,6 @@ class UploadHelperTest {
     void findDuplicateLoginInDb() {
         when(employeeRepository.findDistinctByLogin(any()))
                 .thenReturn(Employee.builder().id("d").login("dharry").build());
-        Assertions.assertThrows(EmployeeException.class, () -> uploadHelper.findDuplicateLoginInDb(employeeDto));
+        assertThrows(EmployeeException.class, () -> uploadHelper.findDuplicateLoginInDb(employeeDto));
     }
 }

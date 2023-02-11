@@ -70,6 +70,9 @@ public class UploadHelper {
     public static void findDuplicateId(List<EmployeeDto> dto) {
         log.info("inside findDuplicateId");
         Map<String, Long> collect = dto.parallelStream().collect(Collectors.groupingBy(EmployeeDto::getId, Collectors.counting())).entrySet().stream().filter(v -> v.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+
+
         if (!collect.isEmpty()) {
             log.error("duplicates id found: {}", collect);
             throw new EmployeeException("duplicates id found: " + collect, null);
