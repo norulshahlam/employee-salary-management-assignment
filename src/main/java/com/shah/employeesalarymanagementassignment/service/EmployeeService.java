@@ -125,4 +125,13 @@ public class EmployeeService {
         employeeRepository.save(employees.get(0));
         return "Successfully updated";
     }
+
+    public String deleteEmployeeById(String id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isEmpty()) {
+            throw new EmployeeException("Employee not found", null);
+        }
+        employeeRepository.deleteById(id);
+        return "Successfully updated";
+    }
 }

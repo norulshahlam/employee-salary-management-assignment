@@ -70,4 +70,12 @@ public class EmployeeController {
         String employee = employeeService.updateEmployeeById(id, dto);
         return SuccessResponse(employee);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("users/{id}")
+    public EmployeeResponse deleteEmployeeById(@PathVariable String id) {
+        log.info("EmployeeController::deleteEmployeeById");
+        String employee = employeeService.deleteEmployeeById(id);
+        return SuccessResponse(employee);
+    }
 }
