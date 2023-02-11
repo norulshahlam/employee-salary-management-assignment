@@ -1,10 +1,7 @@
 package com.shah.employeesalarymanagementassignment.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.shah.employeesalarymanagementassignment.entity.Employee;
 import lombok.*;
-
-import java.util.List;
 
 @Builder
 @Data
@@ -16,12 +13,18 @@ public class EmployeeResponse<T> {
     @NonNull
     ResponseStatus status;
     T data;
-    String errorMessage;
+    String message;
 
-    public static EmployeeResponse SuccessResponse(List<Employee> data) {
+    public static EmployeeResponse SuccessResponse(Object data) {
         return EmployeeResponse.builder()
                 .status(ResponseStatus.SUCCESS)
                 .data(data)
+                .build();
+    }
+    public static EmployeeResponse SuccessResponse(String message) {
+        return EmployeeResponse.builder()
+                .status(ResponseStatus.SUCCESS)
+                .message(message)
                 .build();
     }
 }

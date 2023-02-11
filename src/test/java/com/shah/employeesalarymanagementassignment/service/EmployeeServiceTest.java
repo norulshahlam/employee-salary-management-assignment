@@ -49,7 +49,7 @@ class EmployeeServiceTest {
 
     @Test
     void uploadUsers() throws IOException {
-        employeeService.uploadUsers(multipartFile);
+        employeeService.uploadEmployees(multipartFile);
     }
 
     @Test

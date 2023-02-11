@@ -1,6 +1,7 @@
 package com.shah.employeesalarymanagementassignment.service;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
+import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
 import com.shah.employeesalarymanagementassignment.helper.UploadHelper;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
@@ -14,11 +15,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
 import static com.shah.employeesalarymanagementassignment.helper.MyMapper.mapToEmployee;
+import static com.shah.employeesalarymanagementassignment.helper.MyMapper.mapToEmployeeDto;
 import static com.shah.employeesalarymanagementassignment.helper.UploadHelper.*;
 import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryGreaterThan;
 import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryLessThanOrEqualTo;
@@ -34,7 +38,7 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
     private UploadHelper uploadHelper;
 
-    public List<Employee> uploadUsers(MultipartFile file) throws IOException {
+    public List<EmployeeDto> uploadEmployees(MultipartFile file) throws IOException {
         log.info("Uploading employee..");
 
         // check if file is empty, check correct filename & format - ok
@@ -43,7 +47,7 @@ public class EmployeeService {
         List<EmployeeDto> dto = csvParser(file);
         // check if date & salary is correct format - ok
         employeeValidator(dto);
-        // check for duplicate id - throw error if exists - ok
+        // check for duplicate id in dto - throw error if exists - ok
         findDuplicateId(dto);
         // check for duplicate login in dto - throw error if exists
         findDuplicateLogin(dto);
@@ -56,8 +60,8 @@ public class EmployeeService {
         // once all is checked, then save to database
         Iterable<Employee> savedEmployees = employeeRepository.saveAll(employees);
         log.info("Uploading employee success: {}", savedEmployees);
-
-        return IterableUtils.toList(savedEmployees);
+        List<Employee> employees1 = IterableUtils.toList(savedEmployees);
+        return mapToEmployeeDto(employees1);
     }
 
     /**
@@ -92,5 +96,33 @@ public class EmployeeService {
 
         all.forEach(i -> log.info("sorted: {}", i));
         return all;
+    }
+
+    public String uploadEmployee(EmployeeDto dto) {
+        employeeValidator(Collections.singletonList(dto));
+        uploadHelper.findDuplicateLoginInDb(Collections.singletonList(dto));
+        List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
+        employeeRepository.save(employees.get(0));
+        return "Successfully created";
+    }
+
+    public EmployeeDto getEmployeeById(String id) {
+        Optional<Employee> byId = employeeRepository.findById(id);
+        if (byId.isPresent()) {
+            return mapToEmployeeDto(List.of(byId.get())).get(0);
+        }
+        throw new EmployeeException("Employee not found", null);
+    }
+
+    public String updateEmployeeById(String id, EmployeeDto dto) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isEmpty()) {
+            throw new EmployeeException("Employee not found", null);
+        }
+        dto.setId(id);
+        employeeValidator(List.of(dto));
+        List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
+        employeeRepository.save(employees.get(0));
+        return "Successfully updated";
     }
 }

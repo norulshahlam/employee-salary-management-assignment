@@ -54,4 +54,17 @@ public class MyMapper {
         }
         throw new EmployeeException("Invalid Date format for id " + i.getId(), i.getStartDate());
     }
+
+    public static List<EmployeeDto> mapToEmployeeDto(List<Employee> employee) {
+        log.info("inside mapToEmployeeDto");
+        return employee.parallelStream().map(i -> {
+            EmployeeDto employeeDto = new EmployeeDto();
+            employeeDto.setId(i.getId());
+            employeeDto.setName(i.getName());
+            employeeDto.setLogin(i.getLogin());
+            employeeDto.setSalary(String.valueOf(i.getSalary()));
+            employeeDto.setStartDate(String.valueOf(i.getStartDate()));
+            return employeeDto;
+        }).collect(Collectors.toList());
+    }
 }

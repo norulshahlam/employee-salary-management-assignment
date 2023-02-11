@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return EmployeeResponse.builder()
                 .status(FAILURE)
                 .data(e.getData())
-                .errorMessage(e.getErrorMessage())
+                .message(e.getErrorMessage())
                 .build();
     }
     /**
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
     public EmployeeResponse handleOtherException(Exception e) {
         return EmployeeResponse.builder()
                 .status(FAILURE)
-                .errorMessage(e.getLocalizedMessage())
+                .message(e.getLocalizedMessage())
                 .build();
     }
 
