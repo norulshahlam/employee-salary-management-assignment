@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
@@ -98,11 +99,17 @@ public class EmployeeService {
     }
 
     public String uploadEmployee(EmployeeDto dto) {
+        Optional<Employee> employee = employeeRepository.findById(dto.getId());
+        if (employee.isPresent()) {
+            throw new EmployeeException("Employee ID already exists", null);
+        }
+
         employeeValidator(Collections.singletonList(dto));
         uploadHelper.findDuplicateLoginInDb(Collections.singletonList(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
         employeeRepository.save(employees.get(0));
-        return "Successfully created";
+
+        return "Successfully updated";
     }
 
     public EmployeeDto getEmployeeById(String id) {
@@ -115,7 +122,7 @@ public class EmployeeService {
         dto.setId(employee.getId());
         employeeValidator(List.of(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
-        employeeRepository.save(employees.get(0));
+        employeeRepository.saveAll(employees);
         return "Successfully updated";
     }
 

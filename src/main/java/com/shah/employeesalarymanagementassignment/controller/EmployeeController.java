@@ -4,8 +4,8 @@ import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.model.EmployeeResponse;
 import com.shah.employeesalarymanagementassignment.service.EmployeeService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +20,9 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
  */
 @RestController
 @Slf4j
+@AllArgsConstructor
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
 
     @PostMapping("users/upload")

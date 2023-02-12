@@ -85,6 +85,8 @@ class EmployeeServiceTest {
     @Test
     void uploadEmployee() {
         employeeService.uploadEmployee(dto);
+        when(employeeRepository.findById(anyString())).thenReturn(Optional.empty());
+        employeeService.uploadEmployee(dto);
     }
 
     @Test
