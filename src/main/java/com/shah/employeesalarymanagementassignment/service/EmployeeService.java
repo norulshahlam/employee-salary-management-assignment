@@ -40,13 +40,13 @@ public class EmployeeService {
     public List<EmployeeDto> uploadEmployees(MultipartFile file) throws IOException {
         log.info("Uploading employee..");
 
-        // check if file is empty, check correct filename & format - ok
+        // check if file is empty, check correct filename & format
         checkFileEmpty(file);
         // parse csv - ok
         List<EmployeeDto> dto = csvParser(file);
         // check if date & salary is correct format - ok
         employeeValidator(dto);
-        // check for duplicate id in dto - throw error if exists - ok
+        // check for duplicate id in dto - throw error if exists
         findDuplicateId(dto);
         // check for duplicate login in dto - throw error if exists
         findDuplicateLogin(dto);
@@ -54,7 +54,7 @@ public class EmployeeService {
         ignoreRows(dto);
         // check for duplicate login in db
         uploadHelper.findDuplicateLoginInDb(dto);
-        // map dto to employee list - ok
+        // map dto to employee list
         List<Employee> employees = mapToEmployee(dto);
         // once all is checked, then save to database
         Iterable<Employee> savedEmployees = employeeRepository.saveAll(employees);
@@ -72,7 +72,7 @@ public class EmployeeService {
      * @param limit         default is no limit
      * @return list of employees
      */
-    public List<Employee> fetchListOfEmployees(
+    public List<Employee> getListOfEmployees(
             double minSalary, double maxSalary, String sortedBy, String sortDirection, long offset, long limit) {
 
         if (limit == 0) {

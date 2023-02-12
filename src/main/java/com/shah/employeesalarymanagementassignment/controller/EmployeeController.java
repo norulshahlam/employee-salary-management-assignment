@@ -34,15 +34,15 @@ public class EmployeeController {
     }
 
     @GetMapping("users")
-    public EmployeeResponse fetchListOfEmployees(
+    public EmployeeResponse getListOfEmployees(
             @RequestParam(defaultValue = "0") long offset,
             @RequestParam(defaultValue = "0") long limit,
             @RequestParam(defaultValue = "0") double minSalary,
             @RequestParam(defaultValue = "4000") double maxSalary,
             @RequestParam(defaultValue = "id") String sortedBy,
             @RequestParam(defaultValue = "ASC") String sortDirection) {
-        log.info("EmployeeController::fetchListOfEmployees");
-        List<Employee> employeeList = employeeService.fetchListOfEmployees(
+        log.info("EmployeeController::getListOfEmployees");
+        List<Employee> employeeList = employeeService.getListOfEmployees(
                 minSalary, maxSalary, sortedBy, sortDirection, offset, limit);
         return SuccessResponse(employeeList);
     }
