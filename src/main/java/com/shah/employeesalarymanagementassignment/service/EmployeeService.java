@@ -74,7 +74,7 @@ public class EmployeeService {
      * @param limit         default is no limit
      * @return list of employees
      */
-    public List<Employee> getListOfEmployees(
+    public List<EmployeeDto> getListOfEmployees(
             double minSalary, double maxSalary, String sortedBy, String sortDirection, long offset, long limit) {
 
         if (limit == 0) {
@@ -95,8 +95,9 @@ public class EmployeeService {
                 .skip(offset)
                 .collect(Collectors.toList());
 
+        List<EmployeeDto> employeeDtoList = mapToEmployeeDto(all);
         all.forEach(i -> log.info("sorted: {}", i));
-        return all;
+        return employeeDtoList;
     }
 
     public String uploadEmployee(EmployeeDto dto) {

@@ -1,6 +1,5 @@
 package com.shah.employeesalarymanagementassignment.controller;
 
-import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.model.EmployeeResponse;
 import com.shah.employeesalarymanagementassignment.service.EmployeeService;
@@ -24,7 +23,7 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
 public class EmployeeController {
 
     public static final String USERS_ID = "users/{id}";
-    public static final String USERS = "users";
+    public static final String USERS = "/users";
     public static final String USERS_UPLOAD = "/users/upload";
     private EmployeeService employeeService;
 
@@ -45,7 +44,7 @@ public class EmployeeController {
             @RequestParam(defaultValue = "id") String sortedBy,
             @RequestParam(defaultValue = "ASC") String sortDirection) {
         log.info("EmployeeController::getListOfEmployees");
-        List<Employee> employeeList = employeeService.getListOfEmployees(
+        List<EmployeeDto> employeeList = employeeService.getListOfEmployees(
                 minSalary, maxSalary, sortedBy, sortDirection, offset, limit);
         return SuccessResponse(employeeList);
     }

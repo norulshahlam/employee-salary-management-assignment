@@ -77,7 +77,7 @@ class EmployeeServiceTest {
 
     @Test
     void getListOfEmployees() {
-        List<Employee> employees = employeeService.getListOfEmployees(
+        List<EmployeeDto> employees = employeeService.getListOfEmployees(
                 0, 4000, "id", "asc", 0, Long.MAX_VALUE);
         log.info("employees: {}", employees);
     }
