@@ -68,19 +68,20 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void uploadUsers() throws Exception {
-        when(employeeService.uploadEmployees(any())).thenReturn(employeeDto);
+    void uploadEmployees() throws Exception {
+        when(employeeService.uploadEmployees(any()))
+                .thenReturn(employeeDto);
         mockMvc.perform(multipart(USERS_UPLOAD)
                         .file(multipartFile))
                 .andDo(print())
                 .andExpect(status()
-                        .isOk());
+                        .isCreated());
     }
 
     @Test
     void getListOfEmployees() throws Exception {
         when(employeeService.getListOfEmployees(
-                anyDouble(),anyDouble(),anyString(),anyString(),anyLong(),anyLong()))
+                anyDouble(), anyDouble(), anyString(), anyString(), anyLong(), anyLong()))
                 .thenReturn(employeeDto);
         mockMvc.perform(get(USERS)
                         .contentType(MediaType.APPLICATION_JSON)

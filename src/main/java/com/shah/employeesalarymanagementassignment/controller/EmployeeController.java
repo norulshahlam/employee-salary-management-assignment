@@ -27,14 +27,16 @@ public class EmployeeController {
     public static final String USERS_UPLOAD = "/users/upload";
     private EmployeeService employeeService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(USERS_UPLOAD)
-    public EmployeeResponse uploadUsers(@RequestParam(name = "file")
+    public EmployeeResponse uploadEmployees(@RequestParam(name = "file")
                                         MultipartFile file) throws IOException {
         log.info("EmployeeController::uploadUsers");
         List<EmployeeDto> upload = employeeService.uploadEmployees(file);
         return SuccessResponse(upload);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(USERS)
     public EmployeeResponse getListOfEmployees(
             @RequestParam(defaultValue = "0") long offset,
