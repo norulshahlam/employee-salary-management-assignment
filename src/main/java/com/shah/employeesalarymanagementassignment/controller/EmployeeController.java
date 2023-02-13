@@ -23,9 +23,12 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
 @AllArgsConstructor
 public class EmployeeController {
 
+    public static final String USERS_ID = "users/{id}";
+    public static final String USERS = "users";
+    public static final String USERS_UPLOAD = "/users/upload";
     private EmployeeService employeeService;
 
-    @PostMapping("users/upload")
+    @PostMapping(USERS_UPLOAD)
     public EmployeeResponse uploadUsers(@RequestParam(name = "file")
                                         MultipartFile file) throws IOException {
         log.info("EmployeeController::uploadUsers");
@@ -33,7 +36,7 @@ public class EmployeeController {
         return SuccessResponse(upload);
     }
 
-    @GetMapping("users")
+    @GetMapping(USERS)
     public EmployeeResponse getListOfEmployees(
             @RequestParam(defaultValue = "0") long offset,
             @RequestParam(defaultValue = "0") long limit,
@@ -48,7 +51,7 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("users")
+    @PostMapping(USERS)
     public EmployeeResponse uploadEmployee(@RequestBody EmployeeDto dto) {
         log.info("EmployeeController::uploadEmployee");
         String response = employeeService.uploadEmployee(dto);
@@ -56,7 +59,7 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.FOUND)
-    @GetMapping("users/{id}")
+    @GetMapping(USERS_ID)
     public EmployeeResponse getEmployeeById(@PathVariable String id) {
         log.info("EmployeeController::getEmployeeById");
         EmployeeDto employee = employeeService.getEmployeeById(id);
@@ -64,7 +67,7 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "users/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})
+    @RequestMapping(value = USERS_ID, method = {RequestMethod.PATCH, RequestMethod.PUT})
     public EmployeeResponse updateEmployeeById(@PathVariable String id, @RequestBody EmployeeDto dto) {
         log.info("EmployeeController::updateEmployeeById");
         String employee = employeeService.updateEmployeeById(id, dto);
@@ -72,7 +75,7 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("users/{id}")
+    @DeleteMapping(USERS_ID)
     public EmployeeResponse deleteEmployeeById(@PathVariable String id) {
         log.info("EmployeeController::deleteEmployeeById");
         String employee = employeeService.deleteEmployeeById(id);

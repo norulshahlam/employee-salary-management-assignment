@@ -1,7 +1,7 @@
 package com.shah.employeesalarymanagementassignment.service;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
-import com.shah.employeesalarymanagementassignment.helper.UploadHelper;
+import com.shah.employeesalarymanagementassignment.utils.UploadHelper;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;

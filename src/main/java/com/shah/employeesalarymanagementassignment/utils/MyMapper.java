@@ -1,4 +1,4 @@
-package com.shah.employeesalarymanagementassignment.helper;
+package com.shah.employeesalarymanagementassignment.utils;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.exception.EmployeeException;

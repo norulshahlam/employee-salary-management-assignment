@@ -1,4 +1,4 @@
-package com.shah.employeesalarymanagementassignment.helper;
+package com.shah.employeesalarymanagementassignment.utils;
 
 import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shah.employeesalarymanagementassignment.helper.UploadHelperTest.setUpEmployees;
+import static com.shah.employeesalarymanagementassignment.utils.UploadHelperTest.setUpEmployees;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)

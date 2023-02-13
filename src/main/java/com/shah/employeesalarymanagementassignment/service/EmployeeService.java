@@ -2,7 +2,7 @@ package com.shah.employeesalarymanagementassignment.service;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
-import com.shah.employeesalarymanagementassignment.helper.UploadHelper;
+import com.shah.employeesalarymanagementassignment.utils.UploadHelper;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.shah.employeesalarymanagementassignment.helper.CsvHelper.csvParser;
-import static com.shah.employeesalarymanagementassignment.helper.MyMapper.mapToEmployee;
-import static com.shah.employeesalarymanagementassignment.helper.MyMapper.mapToEmployeeDto;
-import static com.shah.employeesalarymanagementassignment.helper.UploadHelper.*;
+import static com.shah.employeesalarymanagementassignment.utils.CsvHelper.csvParser;
+import static com.shah.employeesalarymanagementassignment.utils.MyMapper.mapToEmployee;
+import static com.shah.employeesalarymanagementassignment.utils.MyMapper.mapToEmployeeDto;
+import static com.shah.employeesalarymanagementassignment.utils.UploadHelper.*;
 import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryGreaterThan;
 import static com.shah.employeesalarymanagementassignment.repository.EmployeeRepository.salaryLessThanOrEqualTo;
 import static org.springframework.data.jpa.domain.Specification.where;
@@ -35,6 +35,7 @@ import static org.springframework.data.jpa.domain.Specification.where;
 @Slf4j
 @AllArgsConstructor
 public class EmployeeService {
+    public static final String EMPLOYEE_NOT_FOUND = "Employee not found";
     private EmployeeRepository employeeRepository;
     private UploadHelper uploadHelper;
 
@@ -104,7 +105,6 @@ public class EmployeeService {
             throw new EmployeeException("Employee ID already exists", null);
         }
 
-
         employeeValidator(Collections.singletonList(dto));
         uploadHelper.findDuplicateLoginInDb(Collections.singletonList(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
@@ -114,12 +114,12 @@ public class EmployeeService {
     }
 
     public EmployeeDto getEmployeeById(String id) {
-        Employee byId = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Employee not found", null));
+        Employee byId = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException(EMPLOYEE_NOT_FOUND, null));
         return mapToEmployeeDto(List.of(byId)).get(0);
     }
 
     public String updateEmployeeById(String id, EmployeeDto dto) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Employee not found", null));
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException(EMPLOYEE_NOT_FOUND, null));
         dto.setId(employee.getId());
         employeeValidator(List.of(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
@@ -128,8 +128,8 @@ public class EmployeeService {
     }
 
     public String deleteEmployeeById(String id) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Employee not found", null));
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException(EMPLOYEE_NOT_FOUND, null));
         employeeRepository.deleteById(employee.getId());
-        return "Successfully updated";
+        return "Successfully deleted";
     }
 }

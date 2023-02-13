@@ -1,4 +1,4 @@
-package com.shah.employeesalarymanagementassignment.helper;
+package com.shah.employeesalarymanagementassignment.utils;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;

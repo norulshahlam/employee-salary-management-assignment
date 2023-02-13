@@ -1,4 +1,4 @@
-package com.shah.employeesalarymanagementassignment.helper;
+package com.shah.employeesalarymanagementassignment.utils;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
 import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @Slf4j
 @NoArgsConstructor
-class UploadHelperTest {
+public class UploadHelperTest {
 
     @Mock
     private static EmployeeRepository employeeRepository;
