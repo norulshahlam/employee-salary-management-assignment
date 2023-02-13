@@ -104,12 +104,13 @@ public class EmployeeService {
             throw new EmployeeException("Employee ID already exists", null);
         }
 
+
         employeeValidator(Collections.singletonList(dto));
         uploadHelper.findDuplicateLoginInDb(Collections.singletonList(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
         employeeRepository.save(employees.get(0));
 
-        return "Successfully updated";
+        return "Successfully created";
     }
 
     public EmployeeDto getEmployeeById(String id) {
