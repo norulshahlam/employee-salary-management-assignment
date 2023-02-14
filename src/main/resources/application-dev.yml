@@ -10,8 +10,10 @@ management:
       enabled: true
 spring:
   datasource:
-    url: jdbc:h2:mem:employee-salary-management
+    url: ${DATABASE_URL:jdbc:h2:mem:employee-salary-management}
     driver-class-name: org.h2.Driver
+    username: ${POSTGRES_DB_USERNAME:sa}
+    password: ${POSTGRES_DB_PASSWORD:sa}
   jpa:
     generate-ddl: true
     show-sql: true
