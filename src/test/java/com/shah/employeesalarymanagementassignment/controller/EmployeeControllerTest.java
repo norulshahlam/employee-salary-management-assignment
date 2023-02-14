@@ -70,8 +70,7 @@ class EmployeeControllerTest {
     void uploadEmployees() throws Exception {
         when(employeeService.uploadEmployees(any()))
                 .thenReturn(employeeDto);
-        mockMvc.perform(multipart(USERS_UPLOAD)
-                        .file(multipartFile))
+        mockMvc.perform(multipart(USERS_UPLOAD).file(multipartFile))
                 .andDo(print())
                 .andExpect(status()
                         .isCreated());
@@ -88,8 +87,7 @@ class EmployeeControllerTest {
                         .params(employeeParams))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data")
-                        .isArray())
+                .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.status").value(SUCCESS.name()));
     }
 
@@ -117,8 +115,7 @@ class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isFound())
-                .andExpect(jsonPath("$.data")
-                        .isNotEmpty())
+                .andExpect(jsonPath("$.data").isNotEmpty())
                 .andExpect(jsonPath("$.status").value(SUCCESS.name()));
     }
 
