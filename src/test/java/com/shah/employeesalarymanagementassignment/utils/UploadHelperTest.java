@@ -109,7 +109,7 @@ public class UploadHelperTest {
 
     @Test
     void ignoreRows() {
-        uploadHelper.ignoreRows(employeeDto);
+        UploadHelper.ignoreRows(employeeDto);
     }
 
     @Test
