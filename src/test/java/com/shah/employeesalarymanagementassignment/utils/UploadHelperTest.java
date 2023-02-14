@@ -93,7 +93,7 @@ public class UploadHelperTest {
 
     @Test
     void employeeValidator() {
-        employeeDto.forEach(i->i.setSalary(""));
+        employeeDto.forEach(i -> i.setSalary(""));
         assertThrows(EmployeeException.class, () -> UploadHelper.employeeValidator(employeeDto));
     }
 
