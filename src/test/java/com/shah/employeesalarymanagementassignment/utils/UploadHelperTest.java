@@ -42,10 +42,10 @@ public class UploadHelperTest {
     void setUp() throws IOException {
         file = new File("src/test/resources/employee.csv");
         input = new FileInputStream(file);
-        setUpEmployees();
+        setUpEmployeeDtoList();
     }
 
-    public static List<EmployeeDto> setUpEmployees() {
+    public static List<EmployeeDto> setUpEmployeeDtoList() {
         employeeDto.add(EmployeeDto.builder()
                 .id("001")
                 .login("dharry")

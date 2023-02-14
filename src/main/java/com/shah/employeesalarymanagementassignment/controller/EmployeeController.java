@@ -22,7 +22,7 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
 @AllArgsConstructor
 public class EmployeeController {
 
-    public static final String USERS_ID = "users/{id}";
+    public static final String USERS_ID = "/users/{id}";
     public static final String USERS = "/users";
     public static final String USERS_UPLOAD = "/users/upload";
     private EmployeeService employeeService;

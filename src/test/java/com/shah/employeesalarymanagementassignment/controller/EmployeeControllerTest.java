@@ -20,15 +20,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shah.employeesalarymanagementassignment.controller.EmployeeController.USERS;
-import static com.shah.employeesalarymanagementassignment.controller.EmployeeController.USERS_UPLOAD;
+import static com.shah.employeesalarymanagementassignment.controller.EmployeeController.*;
 import static com.shah.employeesalarymanagementassignment.model.ResponseStatus.SUCCESS;
-import static com.shah.employeesalarymanagementassignment.utils.UploadHelperTest.setUpEmployees;
+import static com.shah.employeesalarymanagementassignment.service.EmployeeService.*;
+import static com.shah.employeesalarymanagementassignment.utils.UploadHelperTest.setUpEmployeeDtoList;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,7 +62,7 @@ class EmployeeControllerTest {
         FileInputStream input = new FileInputStream(file);
         multipartFile = new MockMultipartFile("file",
                 file.getName(), "text/csv", input);
-        employeeDto = setUpEmployees();
+        employeeDto = setUpEmployeeDtoList();
         employeeParams = employeeParams();
     }
 
@@ -83,6 +82,7 @@ class EmployeeControllerTest {
         when(employeeService.getListOfEmployees(
                 anyDouble(), anyDouble(), anyString(), anyString(), anyLong(), anyLong()))
                 .thenReturn(employeeDto);
+
         mockMvc.perform(get(USERS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .params(employeeParams))
@@ -94,18 +94,57 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void uploadEmployee() {
+    void uploadEmployee() throws Exception {
+        when(employeeService.uploadEmployee(any(EmployeeDto.class)))
+                .thenReturn(SUCCESSFULLY_CREATED);
+        String request = objectMapper.writeValueAsString(employeeDto.get(0));
+        mockMvc.perform(post(USERS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(String.valueOf(request)))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.message").isNotEmpty())
+                .andExpect(jsonPath("$.message").value(SUCCESSFULLY_CREATED))
+                .andExpect(jsonPath("$.status").value(SUCCESS.name()));
     }
 
     @Test
-    void getEmployeeById() {
+    void getEmployeeById() throws Exception {
+        when(employeeService.getEmployeeById(anyString()))
+                .thenReturn(employeeDto.get(0));
+
+        mockMvc.perform(get(USERS_ID, "1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.data")
+                        .isNotEmpty())
+                .andExpect(jsonPath("$.status").value(SUCCESS.name()));
     }
 
     @Test
-    void updateEmployeeById() {
+    void updateEmployeeById() throws Exception {
+        when(employeeService.updateEmployeeById(anyString(), any(EmployeeDto.class)))
+                .thenReturn(SUCCESSFULLY_UPDATED);
+        String request = objectMapper.writeValueAsString(employeeDto.get(0));
+        mockMvc.perform(put(USERS_ID, "1")
+                        .content(String.valueOf(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value(SUCCESSFULLY_UPDATED))
+                .andExpect(jsonPath("$.status").value(SUCCESS.name()));
     }
 
     @Test
-    void deleteEmployeeById() {
+    void deleteEmployeeById() throws Exception {
+        when(employeeService.deleteEmployeeById(anyString()))
+                .thenReturn(SUCCESSFULLY_DELETED);
+        mockMvc.perform(delete(USERS_ID, "1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value(SUCCESSFULLY_DELETED))
+                .andExpect(jsonPath("$.status").value(SUCCESS.name()));
     }
 }

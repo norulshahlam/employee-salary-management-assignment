@@ -36,6 +36,9 @@ import static org.springframework.data.jpa.domain.Specification.where;
 @AllArgsConstructor
 public class EmployeeService {
     public static final String EMPLOYEE_NOT_FOUND = "Employee not found";
+    public static final String SUCCESSFULLY_CREATED = "Successfully created";
+    public static final String SUCCESSFULLY_UPDATED = "Successfully updated";
+    public static final String SUCCESSFULLY_DELETED = "Successfully deleted";
     private EmployeeRepository employeeRepository;
     private UploadHelper uploadHelper;
 
@@ -111,7 +114,7 @@ public class EmployeeService {
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
         employeeRepository.save(employees.get(0));
 
-        return "Successfully created";
+        return SUCCESSFULLY_CREATED;
     }
 
     public EmployeeDto getEmployeeById(String id) {
@@ -125,12 +128,12 @@ public class EmployeeService {
         employeeValidator(List.of(dto));
         List<Employee> employees = mapToEmployee(Collections.singletonList(dto));
         employeeRepository.saveAll(employees);
-        return "Successfully updated";
+        return SUCCESSFULLY_UPDATED;
     }
 
     public String deleteEmployeeById(String id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException(EMPLOYEE_NOT_FOUND, null));
         employeeRepository.deleteById(employee.getId());
-        return "Successfully deleted";
+        return SUCCESSFULLY_DELETED;
     }
 }

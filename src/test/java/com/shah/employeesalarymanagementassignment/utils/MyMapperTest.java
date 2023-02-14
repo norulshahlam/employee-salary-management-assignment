@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shah.employeesalarymanagementassignment.utils.UploadHelperTest.setUpEmployees;
+import static com.shah.employeesalarymanagementassignment.utils.UploadHelperTest.setUpEmployeeDtoList;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,7 +23,7 @@ class MyMapperTest {
 
     @BeforeEach
     void setUp() {
-        employeeDto = setUpEmployees();
+        employeeDto = setUpEmployeeDtoList();
     }
 
     @Test
