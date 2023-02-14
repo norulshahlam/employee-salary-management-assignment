@@ -11,7 +11,7 @@ management:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${HOST}:${PORT}/${DATABASE}
+    url: ${DATABASE_URL}
     username: ${POSTGRES_DB_USERNAME}
     password: ${POSTGRES_DB_PASSWORD}
   jpa:
