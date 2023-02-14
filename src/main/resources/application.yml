@@ -4,4 +4,4 @@ spring:
     description: management of employee salary
     profile: generic
   profiles:
-    active: dev
+    active: prod
