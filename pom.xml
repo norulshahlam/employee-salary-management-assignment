@@ -12,7 +12,7 @@
     <artifactId>employee-salary-management-assignment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>employee-salary-management-assignment</name>
-    <description>Demo project for Spring Boot</description>
+    <description>employee-salary-management-assignment</description>
     <properties>
         <java.version>11</java.version>
     </properties>

@@ -3,6 +3,9 @@ package com.shah.employeesalarymanagementassignment.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+/**
+ * @author NORUL
+ */
 @Builder
 @Data
 @NoArgsConstructor
@@ -15,11 +18,8 @@ public class EmployeeResponse<T> {
     T data;
     String message;
 
-    public static EmployeeResponse SuccessResponse(Object data) {
-        return EmployeeResponse.builder()
-                .status(ResponseStatus.SUCCESS)
-                .data(data)
-                .build();
+    public static <T> EmployeeResponse<T> SuccessResponse(T data) {
+        return new EmployeeResponse(ResponseStatus.SUCCESS, data,null);
     }
     public static EmployeeResponse SuccessResponse(String message) {
         return EmployeeResponse.builder()

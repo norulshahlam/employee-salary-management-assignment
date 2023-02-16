@@ -24,7 +24,3 @@ spring:
   sql:
     init:
       mode: always
-  application:
-    name: employee-salary-management
-    description: management of employee salary
-    profile: prod
