@@ -39,24 +39,24 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(USERS)
-    public EmployeeResponse getListOfEmployees(
+    public EmployeeResponse getEmployeesByParam(
             @RequestParam(defaultValue = "0") long offset,
             @RequestParam(defaultValue = "0") long limit,
             @RequestParam(defaultValue = "0") double minSalary,
             @RequestParam(defaultValue = "4000") double maxSalary,
             @RequestParam(defaultValue = "id") String sortedBy,
             @RequestParam(defaultValue = "ASC") String sortDirection) {
-        log.info("EmployeeController::getListOfEmployees");
-        List<EmployeeDto> employeeList = employeeService.getListOfEmployees(
+        log.info("EmployeeController::getEmployeesWithParam");
+        List<EmployeeDto> employeeList = employeeService.getEmployeesByParam(
                 minSalary, maxSalary, sortedBy, sortDirection, offset, limit);
         return SuccessResponse(employeeList);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(USERS)
-    public EmployeeResponse uploadEmployee(@RequestBody EmployeeDto dto) {
-        log.info("EmployeeController::uploadEmployee");
-        String response = employeeService.uploadEmployee(dto);
+    public EmployeeResponse createEmployee(@RequestBody EmployeeDto dto) {
+        log.info("EmployeeController::createEmployee");
+        String response = employeeService.createEmployee(dto);
         return SuccessResponse(response);
     }
 

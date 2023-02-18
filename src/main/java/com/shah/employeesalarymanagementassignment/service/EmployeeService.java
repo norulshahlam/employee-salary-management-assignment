@@ -77,7 +77,7 @@ public class EmployeeService {
      * @param limit         default is no limit
      * @return list of employees
      */
-    public List<EmployeeDto> getListOfEmployees(
+    public List<EmployeeDto> getEmployeesByParam(
             double minSalary, double maxSalary, String sortedBy, String sortDirection, long offset, long limit) {
 
         if (limit == 0) {
@@ -103,7 +103,7 @@ public class EmployeeService {
         return employeeDtoList;
     }
 
-    public String uploadEmployee(EmployeeDto dto) {
+    public String createEmployee(EmployeeDto dto) {
         Optional<Employee> employee = employeeRepository.findById(dto.getId());
         if (employee.isPresent()) {
             throw new EmployeeException("Employee ID already exists", null);

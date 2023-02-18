@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "e2de776f-fbd9-4a59-bb1c-ab244803a44c",
+		"name": "employee-salary-management-assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10507560"
+	},
+	"item": [
+		{
+			"name": "upload user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"emp00077\",\r\n    \"name\": \"Harryy Potter\",\r\n    \"login\": \"hpoterr\",\r\n    \"salary\": \"1234.00\",\r\n    \"startDate\": \"2001-11-16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/users?offset=0&limit=0&minSalary=0&maxSalary=50&sortedBy=id&sortDirection=desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "0"
+						},
+						{
+							"key": "minSalary",
+							"value": "0"
+						},
+						{
+							"key": "maxSalary",
+							"value": "50"
+						},
+						{
+							"key": "sortedBy",
+							"value": "id"
+						},
+						{
+							"key": "sortDirection",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get userr",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/users/e0001",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users",
+						"e0001"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "minSalary",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "maxSalary",
+							"value": "50",
+							"disabled": true
+						},
+						{
+							"key": "sortedBy",
+							"value": "id",
+							"disabled": true
+						},
+						{
+							"key": "sortDirection",
+							"value": "desc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/NORUL/IdeaProjects/employee-salary-management-assignment/src/main/resources/employee.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/users/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Harryy Potter\",\r\n    \"login\": \"hpoter\",\r\n    \"salary\": \"12345.00\",\r\n    \"startDate\": \"2001-11-16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/users/e0001",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users",
+						"e0001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

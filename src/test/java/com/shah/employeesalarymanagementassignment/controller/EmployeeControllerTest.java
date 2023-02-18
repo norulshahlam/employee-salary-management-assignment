@@ -78,7 +78,7 @@ class EmployeeControllerTest {
 
     @Test
     void getListOfEmployees() throws Exception {
-        when(employeeService.getListOfEmployees(
+        when(employeeService.getEmployeesByParam(
                 anyDouble(), anyDouble(), anyString(), anyString(), anyLong(), anyLong()))
                 .thenReturn(employeeDto);
 
@@ -93,7 +93,7 @@ class EmployeeControllerTest {
 
     @Test
     void uploadEmployee() throws Exception {
-        when(employeeService.uploadEmployee(any(EmployeeDto.class)))
+        when(employeeService.createEmployee(any(EmployeeDto.class)))
                 .thenReturn(SUCCESSFULLY_CREATED);
         String request = objectMapper.writeValueAsString(employeeDto.get(0));
         mockMvc.perform(post(USERS)

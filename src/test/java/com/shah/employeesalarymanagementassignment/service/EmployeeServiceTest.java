@@ -77,16 +77,16 @@ class EmployeeServiceTest {
 
     @Test
     void getListOfEmployees() {
-        List<EmployeeDto> employees = employeeService.getListOfEmployees(
+        List<EmployeeDto> employees = employeeService.getEmployeesByParam(
                 0, 4000, "id", "asc", 0, Long.MAX_VALUE);
         log.info("employees: {}", employees);
     }
 
     @Test
     void uploadEmployee() {
-        employeeService.uploadEmployee(dto);
+        employeeService.createEmployee(dto);
         when(employeeRepository.findById(anyString())).thenReturn(Optional.empty());
-        employeeService.uploadEmployee(dto);
+        employeeService.createEmployee(dto);
     }
 
     @Test
