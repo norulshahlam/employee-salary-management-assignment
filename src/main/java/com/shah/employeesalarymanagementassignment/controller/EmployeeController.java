@@ -30,8 +30,8 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(USERS_UPLOAD)
-    public EmployeeResponse uploadEmployees(@RequestParam(name = "file")
-                                        MultipartFile file) throws IOException {
+    public EmployeeResponse<List<EmployeeDto>> uploadEmployees(@RequestParam(name = "file")
+                                                               MultipartFile file) throws IOException {
         log.info("EmployeeController::uploadUsers");
         List<EmployeeDto> upload = employeeService.uploadEmployees(file);
         return SuccessResponse(upload);
@@ -39,7 +39,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(USERS)
-    public EmployeeResponse getEmployeesByParam(
+    public EmployeeResponse<List<EmployeeDto>> getEmployeesByParam(
             @RequestParam(defaultValue = "0") long offset,
             @RequestParam(defaultValue = "0") long limit,
             @RequestParam(defaultValue = "0") double minSalary,
@@ -54,7 +54,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(USERS)
-    public EmployeeResponse createEmployee(@RequestBody EmployeeDto dto) {
+    public EmployeeResponse<String> createEmployee(@RequestBody EmployeeDto dto) {
         log.info("EmployeeController::createEmployee");
         String response = employeeService.createEmployee(dto);
         return SuccessResponse(response);
@@ -62,7 +62,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping(USERS_ID)
-    public EmployeeResponse getEmployeeById(@PathVariable String id) {
+    public EmployeeResponse<EmployeeDto> getEmployeeById(@PathVariable String id) {
         log.info("EmployeeController::getEmployeeById");
         EmployeeDto employee = employeeService.getEmployeeById(id);
         return SuccessResponse(employee);
@@ -70,7 +70,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = USERS_ID, method = {RequestMethod.PATCH, RequestMethod.PUT})
-    public EmployeeResponse updateEmployeeById(@PathVariable String id, @RequestBody EmployeeDto dto) {
+    public EmployeeResponse<String> updateEmployeeById(@PathVariable String id, @RequestBody EmployeeDto dto) {
         log.info("EmployeeController::updateEmployeeById");
         String employee = employeeService.updateEmployeeById(id, dto);
         return SuccessResponse(employee);
@@ -78,7 +78,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(USERS_ID)
-    public EmployeeResponse deleteEmployeeById(@PathVariable String id) {
+    public EmployeeResponse<String> deleteEmployeeById(@PathVariable String id) {
         log.info("EmployeeController::deleteEmployeeById");
         String employee = employeeService.deleteEmployeeById(id);
         return SuccessResponse(employee);
