@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+/**
+ * @author NORUL
+ */
 @Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,14 +26,6 @@ public class Employee {
     @Column(unique = true)
     private String login;
     private String name;
-    /**
-     * value must be more than 0
-     */
     private double salary;
-
-    /**
-     * valid date formats are dd-MMM-yy: example -> 16-Nov-01 | yyyy-MM-dd: example -> 2001-11-16
-     */
     private LocalDate startDate;
-
 }

@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "upload user",
+			"name": "create employee",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -34,7 +34,7 @@
 			"response": []
 		},
 		{
-			"name": "get users",
+			"name": "get employees with param",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -78,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "get userr",
+			"name": "get employee with id",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -129,7 +129,7 @@
 			"response": []
 		},
 		{
-			"name": "upload users",
+			"name": "upload employees",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -158,7 +158,7 @@
 			"response": []
 		},
 		{
-			"name": "update user by id",
+			"name": "update employee by id",
 			"request": {
 				"method": "PUT",
 				"header": [],
