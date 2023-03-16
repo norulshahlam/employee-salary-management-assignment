@@ -20,7 +20,7 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
 @RestController
 @Slf4j
 @AllArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000/"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class EmployeeController {
 
     public static final String USERS_ID = "/users/{id}";
