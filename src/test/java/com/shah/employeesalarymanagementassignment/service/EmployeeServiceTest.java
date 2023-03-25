@@ -1,17 +1,22 @@
 package com.shah.employeesalarymanagementassignment.service;
 
 import com.shah.employeesalarymanagementassignment.entity.Employee;
-import com.shah.employeesalarymanagementassignment.utils.UploadHelper;
+import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
+import com.shah.employeesalarymanagementassignment.impl.EmployeeServiceImpl;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.repository.EmployeeRepository;
+import com.shah.employeesalarymanagementassignment.utils.UploadHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,9 +24,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -30,14 +38,11 @@ import static org.mockito.Mockito.when;
 class EmployeeServiceTest {
 
     @InjectMocks
-    private EmployeeService employeeService;
-
+    private EmployeeServiceImpl employeeService;
     @Mock
     private EmployeeRepository employeeRepository;
-
     @Mock
     private UploadHelper uploadHelper;
-
     private MultipartFile multipartFile;
     private EmployeeDto dto;
     private Employee employee;
@@ -76,17 +81,32 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void getListOfEmployees() {
+    void getEmployeesByParam() {
+        when(employeeRepository.findAll((Specification<Employee>) any(), any(Sort.class)))
+                .thenReturn(Collections.singletonList(employee));
         List<EmployeeDto> employees = employeeService.getEmployeesByParam(
                 0, 4000, "id", "asc", 0, Long.MAX_VALUE);
-        log.info("employees: {}", employees);
+        assertThat(employees).isNotEmpty();
+    }
+
+    @Test
+    void getEmployeesByParam_NoEmployee() {
+        Assertions.assertThrows(EmployeeException.class,
+                () -> employeeService.getEmployeesByParam(
+                        0, 4000, "id", "asc", 0, Long.MAX_VALUE));
     }
 
     @Test
     void uploadEmployee() {
-        employeeService.createEmployee(dto);
         when(employeeRepository.findById(anyString())).thenReturn(Optional.empty());
         employeeService.createEmployee(dto);
+    }
+
+    @Test
+    void uploadEmployee_Failure() {
+        when(employeeRepository.findById(anyString())).thenReturn(Optional.of(employee));
+        Assertions.assertThrows(EmployeeException.class,
+                () -> employeeService.createEmployee(dto));
     }
 
     @Test

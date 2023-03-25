@@ -6,9 +6,12 @@ import com.shah.employeesalarymanagementassignment.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
 @RestController
 @Slf4j
 @AllArgsConstructor
+@Validated
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class EmployeeController {
 
@@ -40,15 +44,30 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(USERS)
     public EmployeeResponse<List<EmployeeDto>> getEmployeesByParam(
-            @RequestParam(defaultValue = "0") long offset,
-            @RequestParam(defaultValue = Long.MAX_VALUE+"") long limit,
-            @RequestParam(defaultValue = "0") double minSalary,
-            @RequestParam(defaultValue = "4000") double maxSalary,
-            @RequestParam(defaultValue = "id") String sortedBy,
-            @RequestParam(defaultValue = "ASC") String sortDirection) {
+            @RequestParam(defaultValue = "0")
+            @Min(value = 0, message = "offset cannot be negative")
+                long offset,
+            @RequestParam(defaultValue = Long.MAX_VALUE + "")
+            @Min(value = 1, message = "limit must be more than zero")
+                long limit,
+            @RequestParam(defaultValue = "0")
+            @Min(value = 0, message = "minSalary cannot be negative")
+                double minSalary,
+            @RequestParam(defaultValue = "4000")
+            @Positive(message = "maxSalary must be more than zero")
+                double maxSalary,
+            @RequestParam(defaultValue = "id")
+                String sortedBy,
+            @RequestParam(defaultValue = "ASC")
+                String sortDirection) {
         log.info("EmployeeController::getEmployeesWithParam");
         List<EmployeeDto> employeeList = employeeService.getEmployeesByParam(
-                minSalary, maxSalary, sortedBy, sortDirection, offset, limit);
+                minSalary,
+                maxSalary,
+                sortedBy,
+                sortDirection,
+                offset,
+                limit);
         return SuccessResponse(employeeList);
     }
 

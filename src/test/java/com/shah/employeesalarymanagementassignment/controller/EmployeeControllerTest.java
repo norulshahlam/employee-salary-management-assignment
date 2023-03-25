@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.shah.employeesalarymanagementassignment.controller.EmployeeController.*;
+import static com.shah.employeesalarymanagementassignment.impl.EmployeeServiceImpl.*;
 import static com.shah.employeesalarymanagementassignment.model.ResponseStatus.SUCCESS;
-import static com.shah.employeesalarymanagementassignment.service.EmployeeService.*;
 import static com.shah.employeesalarymanagementassignment.utils.UploadHelperTest.setUpEmployeeDtoList;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -47,7 +47,7 @@ class EmployeeControllerTest {
     public static MultiValueMap<String, String> employeeParams() {
         MultiValueMap<String, String> employeeParams = new LinkedMultiValueMap<>();
         employeeParams.add("offset", "0");
-        employeeParams.add("limit", "0");
+        employeeParams.add("limit", "1");
         employeeParams.add("minSalary", "0");
         employeeParams.add("maxSalary", "4000");
         employeeParams.add("sortedBy", "id");
