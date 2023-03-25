@@ -80,9 +80,9 @@ public class EmployeeService {
     public List<EmployeeDto> getEmployeesByParam(
             double minSalary, double maxSalary, String sortedBy, String sortDirection, long offset, long limit) {
 
-        if (limit == 0) {
-            limit = Long.MAX_VALUE;
-        }
+//        if (limit == 0) {
+//            limit = Long.MAX_VALUE;
+//        }
 
         Specification<Employee> specification = where(
                 salaryGreaterThan(minSalary)
