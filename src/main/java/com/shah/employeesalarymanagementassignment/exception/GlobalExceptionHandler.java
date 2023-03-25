@@ -1,7 +1,6 @@
-package com.shah.employeesalarymanagementassignment.advice;
+package com.shah.employeesalarymanagementassignment.exception;
 
 
-import com.shah.employeesalarymanagementassignment.exception.EmployeeException;
 import com.shah.employeesalarymanagementassignment.model.EmployeeResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
