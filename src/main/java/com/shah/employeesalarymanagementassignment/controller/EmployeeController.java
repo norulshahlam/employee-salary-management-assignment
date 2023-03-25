@@ -46,20 +46,20 @@ public class EmployeeController {
     public EmployeeResponse<List<EmployeeDto>> getEmployeesByParam(
             @RequestParam(defaultValue = "0")
             @Min(value = 0, message = "offset cannot be negative")
-                long offset,
+            long offset,
             @RequestParam(defaultValue = Long.MAX_VALUE + "")
             @Min(value = 1, message = "limit must be more than zero")
-                long limit,
+            long limit,
             @RequestParam(defaultValue = "0")
             @Min(value = 0, message = "minSalary cannot be negative")
-                double minSalary,
+            double minSalary,
             @RequestParam(defaultValue = "4000")
             @Positive(message = "maxSalary must be more than zero")
-                double maxSalary,
+            double maxSalary,
             @RequestParam(defaultValue = "id")
-                String sortedBy,
+            String sortedBy,
             @RequestParam(defaultValue = "ASC")
-                String sortDirection) {
+            String sortDirection) {
         log.info("EmployeeController::getEmployeesWithParam");
         List<EmployeeDto> employeeList = employeeService.getEmployeesByParam(
                 minSalary,

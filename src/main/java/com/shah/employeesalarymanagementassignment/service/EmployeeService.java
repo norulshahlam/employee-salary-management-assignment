@@ -17,7 +17,7 @@ public interface EmployeeService {
     List<EmployeeDto> getEmployeesByParam(
             double minSalary, double maxSalary, String sortedBy, String sortDirection, long offset, long limit);
 
-    public String createEmployee(EmployeeDto dto);
+    String createEmployee(EmployeeDto dto);
 
     EmployeeDto getEmployeeById(String id);
 
