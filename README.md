@@ -33,10 +33,20 @@ By utilizing these technologies, the project is able to deliver a fast, reliable
 ### DB diagram illustration
 ![Image](./src/main/resources/db-diagram.PNG)
 
+### Hostname
+
+- dev profile: `http://localhost:8082`  
+- prod profile: `https://employee-salary-management-api.herokuapp.com/`  
+
+### Software requirements
+
+1. Java 11
+2. Maven
+3. Git
 
 ### Preloaded data
 
-There is no pre-loaded data so you have to manually add data or import data from file. [HERE](./src/main/resources/employee.csv) is the pre-loaded data file.
+There is no pre-loaded data so you have to manually add data or import data from file. [HERE](./src/main/resources/employee.csv) is the pre-loaded data file where you can import using postman collection [HERE](./src/main/resources/employee-salary-management-assignment.postman_collection.json)
 
 
 ### How to Run
