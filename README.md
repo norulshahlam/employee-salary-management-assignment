@@ -67,7 +67,15 @@ To run the Bookstore API, follow these steps:
 
 - Alternatively, you can use postman to manually test the endpoints. Download the postman  collection [**HERE**](./src/main/resources/employee-salary-management-assignment.postman_collection.json), and use Postman to import this collection. Now you can test the endpoints using Postman. Make sure you have postman installed. You can click [**HERE**](https://www.postman.com/downloads/) to download if you dont't have one.
 
+- You may skip all steps above if the production hostname is available, to access Swagger.
 
+      {hostname}/swagger-ui/index.html#/
+
+- For any issues, email me at norulshahlam@gmail.com or whatsapp me at +6592212152
+
+### Conclusion
+
+Congratulations, you have successfully compiled and run the app!
 
 ***************************************
 
