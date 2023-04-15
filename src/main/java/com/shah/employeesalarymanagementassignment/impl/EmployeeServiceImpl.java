@@ -76,7 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param sortedBy      default is "id"
      * @param sortDirection default is "ASC"
      * @param offset        default is 0
-     * @param limit         default is no limit
+     * @param limit         default is 0 - no limit
      * @return list of employees
      */
     public List<EmployeeDto> getEmployeesByParam(
@@ -91,7 +91,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> all = employeeRepository
                 .findAll(specification, sort)
                 .stream()
-                .limit(limit)
+                .limit(limit < 1 ? Long.MAX_VALUE : limit)
                 .skip(offset)
                 .collect(Collectors.toList());
         if (ObjectUtils.isEmpty(all)) {

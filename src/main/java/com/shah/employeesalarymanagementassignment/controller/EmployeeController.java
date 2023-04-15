@@ -52,7 +52,7 @@ public class EmployeeController {
             @Min(value = 0, message = "offset cannot be negative")
             long offset,
             @RequestParam(defaultValue = Long.MAX_VALUE + "")
-            @Min(value = 1, message = "limit must be more than zero")
+            @Min(value = 0, message = "limit cannot be negative")
             long limit,
             @RequestParam(defaultValue = "0")
             @Min(value = 0, message = "minSalary cannot be negative")

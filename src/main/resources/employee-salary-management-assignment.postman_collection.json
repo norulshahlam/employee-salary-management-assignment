@@ -21,12 +21,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8081/users",
+					"raw": "localhost:8082/api/v1/users",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8082",
 					"path": [
+						"api",
+						"v1",
 						"users"
 					]
 				}
@@ -39,12 +41,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/users?offset=0&limit=0&minSalary=0&maxSalary=50&sortedBy=id&sortDirection=desc",
+					"raw": "localhost:8082/api/v1/users?offset=0&limit=50&minSalary=0&maxSalary=4000&sortedBy=id&sortDirection=DESC",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8082",
 					"path": [
+						"api",
+						"v1",
 						"users"
 					],
 					"query": [
@@ -54,7 +58,7 @@
 						},
 						{
 							"key": "limit",
-							"value": "0"
+							"value": "50"
 						},
 						{
 							"key": "minSalary",
@@ -62,7 +66,7 @@
 						},
 						{
 							"key": "maxSalary",
-							"value": "50"
+							"value": "4000"
 						},
 						{
 							"key": "sortedBy",
@@ -70,7 +74,7 @@
 						},
 						{
 							"key": "sortDirection",
-							"value": "desc"
+							"value": "DESC"
 						}
 					]
 				}
@@ -83,12 +87,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/users/e0001",
+					"raw": "localhost:8082/api/v1/users/e0001",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8082",
 					"path": [
+						"api",
+						"v1",
 						"users",
 						"e0001"
 					],
@@ -144,12 +150,14 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:8081/users/upload",
+					"raw": "localhost:8082/api/v1/users/upload",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8082",
 					"path": [
+						"api",
+						"v1",
 						"users",
 						"upload"
 					]
@@ -172,12 +180,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8081/users/e0001",
+					"raw": "localhost:8082/api/v1/users/e0001",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8082",
 					"path": [
+						"api",
+						"v1",
 						"users",
 						"e0001"
 					]
