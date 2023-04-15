@@ -1,3 +1,9 @@
+openapi:
+  project-title: Employee Salary Management API
+  project-version: v11
+  project-description: Management of employee salary
+spring-doc:
+  pathsToMatch: /api/**
 spring:
   application:
     name: employee-salary-management

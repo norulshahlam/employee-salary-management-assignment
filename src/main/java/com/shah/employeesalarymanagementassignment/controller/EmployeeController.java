@@ -3,6 +3,7 @@ package com.shah.employeesalarymanagementassignment.controller;
 import com.shah.employeesalarymanagementassignment.model.EmployeeDto;
 import com.shah.employeesalarymanagementassignment.model.EmployeeResponse;
 import com.shah.employeesalarymanagementassignment.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import static com.shah.employeesalarymanagementassignment.model.EmployeeResponse
 @Slf4j
 @AllArgsConstructor
 @Validated
+@RequestMapping("api/v1")
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class EmployeeController {
 
@@ -33,6 +35,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "upload employees using file system")
     @PostMapping(USERS_UPLOAD)
     public EmployeeResponse<List<EmployeeDto>> uploadEmployees(@RequestParam(name = "file")
                                                                MultipartFile file) throws IOException {
@@ -43,6 +46,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(USERS)
+    @Operation(summary = "get Employees By Param")
     public EmployeeResponse<List<EmployeeDto>> getEmployeesByParam(
             @RequestParam(defaultValue = "0")
             @Min(value = 0, message = "offset cannot be negative")
@@ -73,6 +77,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(USERS)
+    @Operation(summary = "create Employee")
     public EmployeeResponse<String> createEmployee(@RequestBody EmployeeDto dto) {
         log.info("EmployeeController::createEmployee");
         String response = employeeService.createEmployee(dto);
@@ -81,6 +86,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping(USERS_ID)
+    @Operation(summary = "get Employee by id")
     public EmployeeResponse<EmployeeDto> getEmployeeById(@PathVariable String id) {
         log.info("EmployeeController::getEmployeeById");
         EmployeeDto employee = employeeService.getEmployeeById(id);
@@ -88,6 +94,7 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "update Employee by id")
     @RequestMapping(value = USERS_ID, method = {RequestMethod.PATCH, RequestMethod.PUT})
     public EmployeeResponse<String> updateEmployeeById(@PathVariable String id, @RequestBody EmployeeDto dto) {
         log.info("EmployeeController::updateEmployeeById");
@@ -97,6 +104,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(USERS_ID)
+    @Operation(summary = "delete Employee by id")
     public EmployeeResponse<String> deleteEmployeeById(@PathVariable String id) {
         log.info("EmployeeController::deleteEmployeeById");
         String employee = employeeService.deleteEmployeeById(id);
