@@ -1,6 +1,6 @@
-package com.shah.assignmentemployeesalarymanagement.service;
+package com.shah.assignmentemployeesalaryapi.service;
 
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

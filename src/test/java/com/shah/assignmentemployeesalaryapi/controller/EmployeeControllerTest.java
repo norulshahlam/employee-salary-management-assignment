@@ -1,8 +1,8 @@
-package com.shah.assignmentemployeesalarymanagement.controller;
+package com.shah.assignmentemployeesalaryapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
-import com.shah.assignmentemployeesalarymanagement.service.EmployeeService;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shah.assignmentemployeesalarymanagement.controller.EmployeeController.*;
-import static com.shah.assignmentemployeesalarymanagement.impl.EmployeeServiceImpl.*;
-import static com.shah.assignmentemployeesalarymanagement.model.ResponseStatus.SUCCESS;
-import static com.shah.assignmentemployeesalarymanagement.utils.UploadHelperTest.setUpEmployeeDtoList;
+import static com.shah.assignmentemployeesalaryapi.controller.EmployeeController.*;
+import static com.shah.assignmentemployeesalaryapi.impl.EmployeeServiceImpl.*;
+import static com.shah.assignmentemployeesalaryapi.model.ResponseStatus.SUCCESS;
+import static com.shah.assignmentemployeesalaryapi.utils.UploadHelperTest.setUpEmployeeDtoList;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;

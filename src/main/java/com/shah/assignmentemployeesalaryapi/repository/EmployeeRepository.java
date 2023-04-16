@@ -1,6 +1,6 @@
-package com.shah.assignmentemployeesalarymanagement.repository;
+package com.shah.assignmentemployeesalaryapi.repository;
 
-import com.shah.assignmentemployeesalarymanagement.entity.Employee;
+import com.shah.assignmentemployeesalaryapi.entity.Employee;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

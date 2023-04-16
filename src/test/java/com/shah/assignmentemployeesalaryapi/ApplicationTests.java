@@ -1,4 +1,4 @@
-package com.shah.assignmentemployeesalarymanagement;
+package com.shah.assignmentemployeesalaryapi;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

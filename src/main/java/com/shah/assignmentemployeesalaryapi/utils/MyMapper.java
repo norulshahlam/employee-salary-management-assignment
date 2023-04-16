@@ -1,8 +1,8 @@
-package com.shah.assignmentemployeesalarymanagement.utils;
+package com.shah.assignmentemployeesalaryapi.utils;
 
-import com.shah.assignmentemployeesalarymanagement.entity.Employee;
-import com.shah.assignmentemployeesalarymanagement.exception.EmployeeException;
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.entity.Employee;
+import com.shah.assignmentemployeesalaryapi.exception.EmployeeException;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.GenericValidator;

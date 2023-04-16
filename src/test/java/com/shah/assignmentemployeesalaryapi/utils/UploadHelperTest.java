@@ -1,9 +1,9 @@
-package com.shah.assignmentemployeesalarymanagement.utils;
+package com.shah.assignmentemployeesalaryapi.utils;
 
-import com.shah.assignmentemployeesalarymanagement.entity.Employee;
-import com.shah.assignmentemployeesalarymanagement.exception.EmployeeException;
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
-import com.shah.assignmentemployeesalarymanagement.repository.EmployeeRepository;
+import com.shah.assignmentemployeesalaryapi.entity.Employee;
+import com.shah.assignmentemployeesalaryapi.exception.EmployeeException;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.repository.EmployeeRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

@@ -1,8 +1,8 @@
-package com.shah.assignmentemployeesalarymanagement.controller;
+package com.shah.assignmentemployeesalaryapi.controller;
 
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeResponse;
-import com.shah.assignmentemployeesalarymanagement.service.EmployeeService;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeResponse;
+import com.shah.assignmentemployeesalaryapi.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
 
-import static com.shah.assignmentemployeesalarymanagement.model.EmployeeResponse.SuccessResponse;
+import static com.shah.assignmentemployeesalaryapi.model.EmployeeResponse.SuccessResponse;
 
 /**
  * @author NORUL

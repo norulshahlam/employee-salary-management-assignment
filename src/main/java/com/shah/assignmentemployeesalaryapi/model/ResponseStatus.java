@@ -1,4 +1,4 @@
-package com.shah.assignmentemployeesalarymanagement.model;
+package com.shah.assignmentemployeesalaryapi.model;
 
 public enum ResponseStatus {
     SUCCESS,

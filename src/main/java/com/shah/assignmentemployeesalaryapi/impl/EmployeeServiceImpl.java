@@ -1,11 +1,11 @@
-package com.shah.assignmentemployeesalarymanagement.impl;
+package com.shah.assignmentemployeesalaryapi.impl;
 
-import com.shah.assignmentemployeesalarymanagement.entity.Employee;
-import com.shah.assignmentemployeesalarymanagement.exception.EmployeeException;
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
-import com.shah.assignmentemployeesalarymanagement.repository.EmployeeRepository;
-import com.shah.assignmentemployeesalarymanagement.service.EmployeeService;
-import com.shah.assignmentemployeesalarymanagement.utils.UploadHelper;
+import com.shah.assignmentemployeesalaryapi.entity.Employee;
+import com.shah.assignmentemployeesalaryapi.exception.EmployeeException;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.repository.EmployeeRepository;
+import com.shah.assignmentemployeesalaryapi.service.EmployeeService;
+import com.shah.assignmentemployeesalaryapi.utils.UploadHelper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IterableUtils;
@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.shah.assignmentemployeesalarymanagement.repository.EmployeeRepository.salaryGreaterThan;
-import static com.shah.assignmentemployeesalarymanagement.repository.EmployeeRepository.salaryLessThanOrEqualTo;
-import static com.shah.assignmentemployeesalarymanagement.utils.CsvHelper.csvParser;
-import static com.shah.assignmentemployeesalarymanagement.utils.MyMapper.mapToEmployee;
-import static com.shah.assignmentemployeesalarymanagement.utils.MyMapper.mapToEmployeeDto;
-import static com.shah.assignmentemployeesalarymanagement.utils.UploadHelper.*;
+import static com.shah.assignmentemployeesalaryapi.repository.EmployeeRepository.salaryGreaterThan;
+import static com.shah.assignmentemployeesalaryapi.repository.EmployeeRepository.salaryLessThanOrEqualTo;
+import static com.shah.assignmentemployeesalaryapi.utils.CsvHelper.csvParser;
+import static com.shah.assignmentemployeesalaryapi.utils.MyMapper.mapToEmployee;
+import static com.shah.assignmentemployeesalaryapi.utils.MyMapper.mapToEmployeeDto;
+import static com.shah.assignmentemployeesalaryapi.utils.UploadHelper.*;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 /**

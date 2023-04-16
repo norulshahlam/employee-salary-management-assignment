@@ -1,4 +1,4 @@
-package com.shah.assignmentemployeesalarymanagement.exception;
+package com.shah.assignmentemployeesalaryapi.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

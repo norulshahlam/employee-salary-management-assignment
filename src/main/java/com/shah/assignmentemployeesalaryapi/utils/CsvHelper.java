@@ -1,7 +1,7 @@
-package com.shah.assignmentemployeesalarymanagement.utils;
+package com.shah.assignmentemployeesalaryapi.utils;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeDto;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 

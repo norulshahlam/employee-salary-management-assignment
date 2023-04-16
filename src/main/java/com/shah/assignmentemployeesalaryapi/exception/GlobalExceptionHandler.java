@@ -1,7 +1,7 @@
-package com.shah.assignmentemployeesalarymanagement.exception;
+package com.shah.assignmentemployeesalaryapi.exception;
 
 
-import com.shah.assignmentemployeesalarymanagement.model.EmployeeResponse;
+import com.shah.assignmentemployeesalaryapi.model.EmployeeResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,7 +15,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.shah.assignmentemployeesalarymanagement.model.ResponseStatus.FAILURE;
+import static com.shah.assignmentemployeesalaryapi.model.ResponseStatus.FAILURE;
 
 @RestControllerAdvice
 @Slf4j

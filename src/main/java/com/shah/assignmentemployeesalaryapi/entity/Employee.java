@@ -1,4 +1,4 @@
-package com.shah.assignmentemployeesalarymanagement.entity;
+package com.shah.assignmentemployeesalaryapi.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
