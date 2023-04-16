@@ -2,6 +2,7 @@ package com.shah.assignmentemployeesalaryapi.exception;
 
 
 import com.shah.assignmentemployeesalaryapi.model.EmployeeResponse;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 
 import static com.shah.assignmentemployeesalaryapi.model.ResponseStatus.FAILURE;
 
+/**
+ * @author NORUL
+ */
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {

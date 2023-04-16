@@ -57,6 +57,12 @@ class EmployeeControllerTest {
 
     @BeforeEach
     void setUp() throws IOException {
+
+        /** TODO
+         * Add test case for ControllerAdvice
+         * https://reflectoring.io/spring-boot-web-controller-test/
+         **/
+
         openMocks(this);
         File file = new File("src/test/resources/employee.csv");
         FileInputStream input = new FileInputStream(file);
@@ -70,7 +76,7 @@ class EmployeeControllerTest {
     void uploadEmployees() throws Exception {
         when(employeeService.uploadEmployees(any()))
                 .thenReturn(employeeDto);
-        mockMvc.perform(multipart(USERS_UPLOAD).file(multipartFile))
+        mockMvc.perform(multipart(API + USERS_UPLOAD).file(multipartFile))
                 .andDo(print())
                 .andExpect(status()
                         .isCreated());
@@ -82,7 +88,7 @@ class EmployeeControllerTest {
                 anyDouble(), anyDouble(), anyString(), anyString(), anyLong(), anyLong()))
                 .thenReturn(employeeDto);
 
-        mockMvc.perform(get(USERS)
+        mockMvc.perform(get(API + USERS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .params(employeeParams))
                 .andDo(print())
@@ -96,9 +102,9 @@ class EmployeeControllerTest {
         when(employeeService.createEmployee(any(EmployeeDto.class)))
                 .thenReturn(SUCCESSFULLY_CREATED);
         String request = objectMapper.writeValueAsString(employeeDto.get(0));
-        mockMvc.perform(post(USERS)
+        mockMvc.perform(post(API + USERS)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(request)))
+                        .content(request))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.message").isNotEmpty())
@@ -111,7 +117,7 @@ class EmployeeControllerTest {
         when(employeeService.getEmployeeById(anyString()))
                 .thenReturn(employeeDto.get(0));
 
-        mockMvc.perform(get(USERS_ID, "1")
+        mockMvc.perform(get(API + USERS_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isFound())
@@ -124,7 +130,7 @@ class EmployeeControllerTest {
         when(employeeService.updateEmployeeById(anyString(), any(EmployeeDto.class)))
                 .thenReturn(SUCCESSFULLY_UPDATED);
         String request = objectMapper.writeValueAsString(employeeDto.get(0));
-        mockMvc.perform(put(USERS_ID, "1")
+        mockMvc.perform(put(API + USERS_ID, "1")
                         .content(String.valueOf(request))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -137,7 +143,7 @@ class EmployeeControllerTest {
     void deleteEmployeeById() throws Exception {
         when(employeeService.deleteEmployeeById(anyString()))
                 .thenReturn(SUCCESSFULLY_DELETED);
-        mockMvc.perform(delete(USERS_ID, "1")
+        mockMvc.perform(delete(API + USERS_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

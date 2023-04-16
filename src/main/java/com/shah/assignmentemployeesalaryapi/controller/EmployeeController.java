@@ -25,13 +25,14 @@ import static com.shah.assignmentemployeesalaryapi.model.EmployeeResponse.Succes
 @Slf4j
 @AllArgsConstructor
 @Validated
-@RequestMapping("api/v1")
+@RequestMapping(EmployeeController.API)
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class EmployeeController {
 
     public static final String USERS_ID = "/users/{id}";
     public static final String USERS = "/users";
     public static final String USERS_UPLOAD = "/users/upload";
+    public static final String API = "/api";
     private EmployeeService employeeService;
 
     @ResponseStatus(HttpStatus.CREATED)
